@@ -7,3 +7,7 @@ def login(request):
 # GARZON
 def garzon(request):
     return render(request, 'garzon.html')
+
+# GARZON_HISTORIAL
+def historial(request):
+    return render(request, 'historial.html')
