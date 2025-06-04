@@ -1,0 +1,99 @@
+body {
+    background: linear-gradient(to right, #6246ea, #a79ae8);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+section {
+    width: 350px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+section img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.contenedor-login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.contenedor-login h1 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+}
+
+.contenedor-login input {
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    outline: none;
+    transition: border-color 0.3s;
+    font-size: 14px;
+}
+
+.contenedor-login input:focus {
+    border-color: #a79ae8;
+    box-shadow: 0 0 0 2px #e0dcfa;
+}
+
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #333;
+}
+
+.checkbox-container input {
+    margin-right: 8px;
+}
+
+button.ingresar-btn {
+    background-color: #6246ea;
+    color: white;
+    border: none;
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+button.ingresar-btn:hover {
+    background-color: #4b34c4;
+}
+
+a.olvido {
+    font-size: 13px;
+    color: #ea4646;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a.olvido:hover {
+    color: #c13535;
+}

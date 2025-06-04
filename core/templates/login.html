@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comanda - Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <section>
+            <img src="{% static 'icons/user.png' %}" alt="user">
+
+            <div class="contenedor-login">
+                <h1>Usuario</h1>
+                <input type="text" name="usuario">
+            </div>
+
+            <div class="contenedor-login">
+                <h1>Contraseña</h1>
+                <input type="password" name="contraseña">
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="recordarme">
+                <label for="recordarme">Recuérdame</label>
+            </div>
+
+            <button class="ingresar-btn">Ingresar</button>
+
+            <a href="#" class="olvido">¿Haz olvidado la contraseña?</a>
+        </section>
+    </main>
+</body>
+</html>
