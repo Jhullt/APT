@@ -107,6 +107,7 @@ header h1{
   cursor: pointer;
   transition: transform 0.2s;
   height: 140px;
+  width: 200px;
 }
 
 .mesa h1{
@@ -308,13 +309,12 @@ header h1{
   z-index: 10;
 }
 
-#vista-carta{
+#vista-carta {
+  display: none;
   flex-direction: row;
   width: 100%;
   min-height: 100vh;
-  display: flex;
 }
-
 
 /* CONTENEDOR DERECHA */
 
@@ -509,176 +509,6 @@ header h1{
   background-color: #2f2462;
 }
 
-
-/* CODIGO SIN CORREGIR */
-
-
-/* MODAL */
-
-.contenedor-modal-derecha {
-  padding: 12px;
-  width: 440px;
-}
-
-.contenedor-modal-inicio{
-  display: flex;
-  padding: 12px;
-  justify-content: flex-end;
-}
-
-.contenedor-modal-inicio button{
-  background-color: #6246ea;
-}
-
-.contenedor-modal-inicio button:hover{
-  background-color: #2f2462;
-}
-
-.contenedor-modal-divisor{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.contenedor-modal-izquierda img{
-  width: 250px;
-  height: 250px;
-  padding: 20px;
-}
-
-.contenedor-modal-items-centrados h1{
-  font-size: 18px;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-}
-
-.contenedor-modal-items-centrados h2{
-  color: #e74c3c;
-  font-size: 16px;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-}
-
-.modal-footer{
-  display: flex;
-  justify-content: space-evenly;
-}
-
-#cancelar-modal{
-  background-color: #e45858;
-  color: white;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  width: 150px;
-  height: 50px;
-  border-radius: 10px;
-  font-weight: bolder;
-}
-
-#cancelar-modal:hover{
-  background-color: #de3535;
-}
-
-#agregar-modal{
-  background-color: #6246ea;
-  color: white;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  width: 150px;
-  height: 50px;
-  border-radius: 10px;
-  font-weight: bolder;
-}
-
-#agregar-modal:hover{
-  background-color: #2f2462;
-}
-
-.contenedor-modal-izquierda{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.form-check-input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  margin-right: 8px;
-  position: relative;
-  cursor: pointer;
-}
-
-.form-check-input[type="checkbox"]:checked {
-  background-color: #6246ea;
-  border-color: #6246ea;
-}
-
-.form-check-input[type="checkbox"]::before {
-  position: absolute;
-  top: -2px;
-  left: 2px;
-  color: white;
-  font-size: 14px;
-  display: none;
-}
-
-.form-check-input[type="checkbox"]:checked::before {
-  display: block;
-}
-
-.form-label{
-  font-weight: bolder;
-  font-size: 16px;
-}
-
-.contenedor-modal-bajar{
-  padding: 10px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.contenedor-acompanamientos-titulo{
-  display: flex;
-  justify-content: space-between;
-}
-
-.contenedor-acompanamientos-titulo h1{
-  font-size: 18px;
-  font-weight: bolder;
-}
-
-.contenedor-acompanamientos-titulo h2{
-  font-size: 18px;
-  font-weight: bolder;
-  color: #e74c3c;
-}
-
-.form-check-modal{
-  display: flex;
-  justify-content: space-between;
-}
-
-#precio-form-modal{
-  color: #e74c3c;
-  font-weight: bolder;
-}
-
-input[type="radio"]:checked {
-  accent-color: #6246ea;
-}
-
-.form-check-input:checked {
-  background-color: #6246ea;
-  border-color: #6246ea;
-}
-
 /* AGREGAR CARRITO */
 
 .registrar-comanda-carrito{
@@ -687,37 +517,99 @@ input[type="radio"]:checked {
   border-radius: 10px;
   padding: 12px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 20px;
+  justify-content: space-between
 }
 
-.registrar-comanda-carrito-arriba{
+.registrar-comanda-carrito-izquierda{
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
 }
 
-.registrar-comanda-carrito-arriba h1{
-  font-size: 20px;
-  font-weight: bolder;
+.registrar-comanda-carrito-izquierda h1{
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0px;
 }
 
-.registrar-comanda-carrito-arriba button{
+.registrar-comanda-carrito-izquierda p{
+  font-size: 16px;
+  font-weight: bold;
+  color: #ea4646;
+  margin: 0px;
+}
+
+.registrar-comanda-carrito-derecha button{
   background-color: white;
   color: #6246ea;
   border: none;
-  font-size: 20px;
 }
 
-.registrar-comanda-carrito-arriba button:hover{
+.registrar-comanda-carrito-derecha button:hover{
+  background-color: white;
   color: #2f2462;
+  border: none;
 }
 
-.registrar-comanda-carrito-abajo h1{
-  font-size: 18px;
-  font-weight: bolder;
+/* MODAL */
+
+.modal-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.registrar-comanda-carrito-abajo p{
+.modal-header h5{
   font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+#cancelarAcompanamiento{
+  background-color: #e45858;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#cancelarAcompanamiento:hover{
+  background-color: #de3535;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#confirmarAcompanamiento{
+  background-color: #6246ea;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#confirmarAcompanamiento:hover{
+  background-color: #2f2462;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+.form-check-input:checked {
+  background-color: #6246ea;
+  border-color: #6246ea;
 }

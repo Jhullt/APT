@@ -81,10 +81,10 @@ class Comanda(models.Model):
     mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    detalle = models.TextField()
     fecha_comanda = models.DateField()
     hora_inicio_comanda = models.DateTimeField()
-    hora_fin_comanda = models.DateTimeField()
+    hora_fin_comanda = models.DateTimeField(null=True, blank=True)
     precio_total_comanda = models.DecimalField(max_digits=7, decimal_places=0)
 
     def __str__(self):

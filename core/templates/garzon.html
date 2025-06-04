@@ -13,7 +13,7 @@
 
 <body>
     <!-- HEADER -->
-    <header>
+    <header id="header">
         <div class="menu-usuario">
             <button><i class="fa-solid fa-bars"></i></button>
         </div>
@@ -28,7 +28,7 @@
      <main>
 
         <!-- VISTA MESAS -->
-        <section>
+        <section id="vista-mesas">
 
             <!-- CONTENEDOR MESAS-->
 
@@ -130,7 +130,7 @@
 
         <!-- REALIZAR COMANDA -->
 
-        <section id="vista-carta">
+        <section id="vista-carta" style="display: none;">
 
             <!-- CONTENEDOR IZQUIERDA-->
 
@@ -147,11 +147,9 @@
 
                 <div class="registrar-comanda-izquierda-abajo">
                     <div class="contenedor-categorias">
-                        <button>Plato principal</button>
-                        <button>Ensaladas</button>
-                        <button>Postres</button>
-                        <button>Bebestibles</button>
-                        <button>Acompañamientos</button>
+                        {% for categoria in categorias %}
+                        <button class="btn-categoria" data-id="{{ categoria.id_categoria }}">{{ categoria.nombre_categoria }}</button>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -163,43 +161,7 @@
 
                     <div class="contenedor-productos">
 
-                        <!-- PRODUCTOS TARJETA -->
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
-
-                        <div class="producto">
-                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
-                            <p>Producto</p>
-                            <strong>$1.000</strong>
-                        </div>
+                        <!-- PRODUCTOS CARGADOS POR ID -->
 
                     </div>
 
@@ -277,7 +239,29 @@
         </section>
 
      </main>
+
+        <!-- MODAL ACOMPAÑAMIENTO -->
+    <div class="modal fade" id="modalAcompanamiento" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modalProductoNombre">Selecciona un acompañamiento</h5>
+            </div>
+            <div class="modal-body">
+            <form id="formAcompanamientos" class="d-flex flex-column gap-2">
+                <!-- Acompañamientos se cargarán aquí -->
+            </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+            <button type="button" id="cancelarAcompanamiento" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="confirmarAcompanamiento" class="btn btn-primary">Agregar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  
     <script src="{% static 'js/garzon.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
