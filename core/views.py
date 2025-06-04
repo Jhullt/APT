@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+# LOGIN
+def login(request):
+    return render(request, 'login.html')
+
+# GARZON
+def garzon(request):
+    return render(request, 'garzon.html')
