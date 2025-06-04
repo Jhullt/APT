@@ -79,9 +79,16 @@ STATIC_URL = 'static/'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dx1clokey',
-    'API_KEY': 'aqHK7y47OvwdE-ANQ2Cwyhj1yWs',
-    'API_SECRET': '669631333549827',
+    'API_KEY': '669631333549827',
+    'API_SECRET': 'aqHK7y47OvwdE-ANQ2Cwyhj1yWs',
 }
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=CLOUDINARY_STORAGE['API_SECRET']
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
