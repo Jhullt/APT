@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COMANDA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/garzon.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="menu-usuario">
+            <button><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <h1>COMANDA</h1>
+        <div class="contenedor-links">
+            <a href="#">MESAS</a>
+            <a href="#">HISTORIAL</a>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+     <main>
+
+        <!-- VISTA MESAS -->
+        <section>
+
+            <!-- CONTENEDOR MESAS-->
+
+            <div class="contenedor-mesas">
+
+                <!-- MESAS -->
+
+                <div class="mesa">
+                    <!-- ESTADO DE LA MESA -->
+                    <!-- EJEMPLO MESA LIBRE -->
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 01</h2>
+                </div>
+
+                <div class="mesa">
+                    <!-- ESTADO DE LA MESA -->
+                    <!-- EJEMPLO MESA CON PEDIDO TOMADO -->
+                    <div class="mesa-estado-preparacion">
+                        <h1>En preparación</h1>
+                    </div>
+                    <p>Pedido 01</p>
+                    <h2>Mesa 02</h2>
+                </div>
+
+                <div class="mesa">
+                    <!-- ESTADO DE LA MESA -->
+                    <!-- EJEMPLO MESA CON PEDIDO LISTO PARA ENTREGAR DESDE COCINA -->
+                    <div class="mesa-estado-entregar">
+                        <h1>Esperando entrega</h1>
+                    </div>
+                    <p>Pedido 02</p>
+                    <h2>Mesa 03</h2>
+                </div>
+
+                <div class="mesa">
+                    <!-- ESTADO DE LA MESA -->
+                    <!-- EJEMPLO MESA PEDIDO ENTREGADO -->
+                    <div class="mesa-estado-entregado">
+                        <h1>Entregado</h1>
+                    </div>
+                    <p>Pedido 03</p>
+                    <h2>Mesa 04</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 05</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 06</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 07</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 08</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 09</h2>
+                </div>
+
+                <div class="mesa">
+                    <div class="mesa-estado-libre">
+                        <h1>Libre</h1>
+                    </div>
+                    <p></p>
+                    <h2>Mesa 10</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- REALIZAR COMANDA -->
+
+        <section id="vista-carta">
+
+            <!-- CONTENEDOR IZQUIERDA-->
+
+            <div class="registrar-comanda-izquierda">
+                
+                <!-- VOLVER -->
+
+                <div class="registrar-comanda-izquierda-arriba">
+                    <button><i class="fa-solid fa-less-than"></i></button>
+                    <h1>Menú</h1>
+                </div>
+
+                <!-- CATEGORIAS -->
+
+                <div class="registrar-comanda-izquierda-abajo">
+                    <div class="contenedor-categorias">
+                        <button>Plato principal</button>
+                        <button>Ensaladas</button>
+                        <button>Postres</button>
+                        <button>Bebestibles</button>
+                        <button>Acompañamientos</button>
+                    </div>
+                </div>
+
+                <!-- PRODUCTOS -->
+
+                <div class="registrar-comanda-izquierda-final">
+
+                    <!-- CONTENEDOR -->
+
+                    <div class="contenedor-productos">
+
+                        <!-- PRODUCTOS TARJETA -->
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                        <div class="producto">
+                            <img src="{% static 'icons/prueba.jpg' %}" alt="">
+                            <p>Producto</p>
+                            <strong>$1.000</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                
+            </div>
+
+            <!-- SEPARADOR -->
+
+            <div class="registrar-comanda-centro"></div>
+
+            <!-- CONTENEDOR DERECHA-->
+
+            <div class="registrar-comanda-derecha">
+
+                <!-- INFORMACIÓN ARRIBA -->
+
+                <div class="registrar-comanda-derecha-arriba">
+
+                    <!-- NOMBRE GARZON -->
+                    <div class="registrar-comanda-garzon">
+                        <h1>Garzón Franco</h1>
+                    </div>
+
+                  <!-- NUMERO DE CLIENTES EN LA MESA-->
+                    <div class="registrar-comanda-numero-clientes">
+                        <i class="fa-solid fa-user" style="color: white;"></i>
+                        <span>1</span>
+                        <button><i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
+                  
+                  <!-- NUMERO DE MESA-->
+
+                    <div class="registrar-comanda-mesa">
+                        <h1>Mesa 01</h1>
+                        <button><i class="fa-solid fa-pen-to-square"></i></button>       
+                    </div>
+
+                </div>
+
+                <!-- INFORMACIÓN DE LA COMANDA -->
+          
+                <div class="registrar-comanda-derecha-medio">
+
+                    <!-- NUMERO DE PEDIDO -->
+                    <div class="registrar-comanda-derecha-medio-n-pedido">
+                        <h1>Pedido 1</h1>
+                    </div>
+
+                    <!-- PEDIDOS EN CARRITO-->
+                    <div class="registrar-comanda-derecha-medio-pedido-contenedor">
+
+                    </div>
+                
+                <!-- PRECIO TOTAL-->
+                
+                <div class="registrar-comanda-derecha-precio">
+                  <h1>Total:</h1>
+                  <h1>$0</h1>
+                </div>
+                
+                <!-- BOTONES -->
+
+                <div class="registrar-comanda-derecha-buttons">
+                  <button id="cancelar-comanda">Cancelar</button>
+                  <button id="entregar-comanda">Entregar</button>
+                  <button id="enviar-comanda">Enviar</button>
+                </div>
+                
+              </div>
+
+
+
+        </section>
+
+     </main>
+    <script src="{% static 'js/garzon.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

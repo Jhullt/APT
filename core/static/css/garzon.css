@@ -4,3 +4,720 @@ body {
   padding: 0;
   background: #f2f2f2;
 }
+
+.oculto {
+  display: none;
+}
+
+/* HEADER */
+
+header {
+  background-color: #6246ea;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1{
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.menu-usuario{
+  display: flex;
+  padding: 8px;
+}
+
+.menu-usuario button{
+  background-color: #6246ea;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-usuario button:hover{
+  background-color: #6246ea;
+  border: none;
+  color: #2f2462;
+  cursor: pointer;
+}
+
+.menu-usuario i{
+  font-size: 25px;
+}
+
+.contenedor-links{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 50px;
+}
+
+.contenedor-links a{
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.contenedor-links a:hover{
+  font-size: 16px;
+  font-weight: bold;
+  color: #2f2462;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* INICIO PERSONALIZACIÓN DEL MAIN */
+
+/* VISTA MESAS*/
+
+/* CONTENEDOR MESAS */
+
+.contenedor-mesas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  align-items: center;
+}
+
+/* MESAS */
+
+.mesa {
+  background-color: white;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  height: 140px;
+}
+
+.mesa h1{
+  font-size: 16px;
+  color: white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+}
+
+.mesa p{
+  font-size: 16px;
+  font-weight: normal;
+  color: #403f3f;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.mesa h2{
+  font-size: 16px;
+  font-weight: normal;
+  color: #000000;
+}
+
+.mesa:hover {
+  transform: translateY(-3px);
+}
+
+/* MESA LIBRE */
+
+.mesa-estado-libre{
+  background-color: #898989;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA CON PEDIDO TOMADO  */
+
+.mesa-estado-preparacion{
+  background-color: #e58e26;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA CON PEDIDO LISTO PARA ENTREGAR DESDE COCINA  */
+
+.mesa-estado-entregar{
+  background-color: #e74c3c;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA PEDIDO ENTREGADO */
+
+.mesa-estado-entregado{
+  background-color: #88c76f;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* REALIZAR COMANDA */
+
+.registrar-comanda-izquierda {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  min-width: 300px;
+}
+
+/* VOLVER */
+
+.registrar-comanda-izquierda-arriba{
+  display: flex;
+  flex-direction: row;
+  background-color: #6246ea;
+  padding: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+  align-items: center;
+  column-gap: 10px;
+  padding: 12px;
+}
+
+.registrar-comanda-izquierda-arriba button{
+  background-color: white;
+  color: #6246ea;
+  border: none;
+  border-radius: 100%;
+  height: 33px;
+  width: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registrar-comanda-izquierda-arriba button:hover{
+  background-color: #2f2462;
+  color: white;
+  border: none;
+  border-radius: 100%;
+  height: 33px;
+  width: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registrar-comanda-izquierda-arriba h1{
+  font-size: 30px;
+  color: white;
+  margin: 0px;
+  cursor: context-menu;
+}
+
+/* CATEGORIAS  */
+
+.registrar-comanda-izquierda-abajo{
+  background-color: #6246ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-categorias{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding: 5px;
+}
+
+.contenedor-categorias button{
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: 0.2s;
+}
+
+.contenedor-categorias button:hover{
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: #2f2462;
+  transition: 0.2s;
+}
+
+/* PRODUCTOS */
+
+.contenedor-productos{
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  max-height: 510px;
+  overflow-y: auto;
+  padding-right: 5px;
+  padding-bottom: 20px;
+}
+
+/* PRODUCTOS TARJETA */
+
+.producto {
+  background: white;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.producto img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.producto p {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #222;
+}
+
+.producto strong {
+  display: block;
+  margin-top: 5px;
+  color: #e74c3c;
+}
+
+/* SEPARADOR */
+
+.registrar-comanda-centro{
+  width: 5px;
+  background-color: #6246ea;
+  cursor: col-resize;
+  position: relative;
+  z-index: 10;
+}
+
+#vista-carta{
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+
+/* CONTENEDOR DERECHA */
+
+.registrar-comanda-derecha {
+  width: 45%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+/* INFORMACIÓN ARRIBA  */
+
+.registrar-comanda-derecha-arriba{
+  background-color: #2f2462;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  column-gap: 40px;
+  justify-content: space-around;
+}
+
+/* NOMBRE GARZON  */
+
+.registrar-comanda-garzon{
+  display: flex;
+  align-items: center;
+}
+
+.registrar-comanda-garzon h1{
+  color: white;
+  font-size: 16px;
+  margin: 0px;
+}
+
+/* NUMERO DE CLIENTES EN LA MESA */
+
+.registrar-comanda-numero-clientes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  position: relative;
+}
+
+.registrar-comanda-numero-clientes span{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.registrar-comanda-numero-clientes button{
+  border-radius: 100%;
+  background-color: #6246ea;
+  color: white;
+  border: none;
+}
+
+/* NUMERO DE MESA */
+
+.registrar-comanda-mesa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  position: relative;
+}
+
+.registrar-comanda-mesa h1{
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.registrar-comanda-mesa button{
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;  
+}
+
+/* INFORMACIÓN DE LA COMANDA */
+
+.registrar-comanda-derecha-medio{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+/* NUMERO DE PEDIDO */
+
+.registrar-comanda-derecha-medio-n-pedido{
+  background-color: #2f2462;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin: 12px 12px 12px 12px;
+}
+
+.registrar-comanda-derecha-medio-n-pedido h1{
+  font-size: 16px;
+  font-weight: bolder;
+  color: white;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* PEDIDOS EN CARRITO */
+
+.registrar-comanda-derecha-medio-pedido-contenedor {
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding-right: 5px;
+  margin: 12px 12px 12px 12px;
+}
+
+/* PRECIO TOTAL */
+
+.registrar-comanda-derecha-precio{
+  background-color: #2f2462;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.registrar-comanda-derecha-precio h1{
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+/* BOTONES */
+
+#cancelar-comanda{
+  background-color: #e45858;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+.registrar-comanda-derecha-buttons{
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  column-gap: 3px;
+}
+
+#cancelar-comanda:hover {
+  background-color: #de3535;
+}
+
+#entregar-comanda{
+  background-color: #53c342;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+
+#entregar-comanda:hover {
+  background-color: #37b524;
+}
+
+#enviar-comanda{
+  background-color: #6246ea;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+
+#enviar-comanda:hover {
+  background-color: #2f2462;
+}
+
+
+/* CODIGO SIN CORREGIR */
+
+
+/* MODAL */
+
+.contenedor-modal-derecha {
+  padding: 12px;
+  width: 440px;
+}
+
+.contenedor-modal-inicio{
+  display: flex;
+  padding: 12px;
+  justify-content: flex-end;
+}
+
+.contenedor-modal-inicio button{
+  background-color: #6246ea;
+}
+
+.contenedor-modal-inicio button:hover{
+  background-color: #2f2462;
+}
+
+.contenedor-modal-divisor{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.contenedor-modal-izquierda img{
+  width: 250px;
+  height: 250px;
+  padding: 20px;
+}
+
+.contenedor-modal-items-centrados h1{
+  font-size: 18px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor-modal-items-centrados h2{
+  color: #e74c3c;
+  font-size: 16px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-footer{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#cancelar-modal{
+  background-color: #e45858;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+
+#cancelar-modal:hover{
+  background-color: #de3535;
+}
+
+#agregar-modal{
+  background-color: #6246ea;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+
+#agregar-modal:hover{
+  background-color: #2f2462;
+}
+
+.contenedor-modal-izquierda{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-check-input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.form-check-input[type="checkbox"]:checked {
+  background-color: #6246ea;
+  border-color: #6246ea;
+}
+
+.form-check-input[type="checkbox"]::before {
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  color: white;
+  font-size: 14px;
+  display: none;
+}
+
+.form-check-input[type="checkbox"]:checked::before {
+  display: block;
+}
+
+.form-label{
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.contenedor-modal-bajar{
+  padding: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.contenedor-acompanamientos-titulo{
+  display: flex;
+  justify-content: space-between;
+}
+
+.contenedor-acompanamientos-titulo h1{
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.contenedor-acompanamientos-titulo h2{
+  font-size: 18px;
+  font-weight: bolder;
+  color: #e74c3c;
+}
+
+.form-check-modal{
+  display: flex;
+  justify-content: space-between;
+}
+
+#precio-form-modal{
+  color: #e74c3c;
+  font-weight: bolder;
+}
+
+input[type="radio"]:checked {
+  accent-color: #6246ea;
+}
+
+.form-check-input:checked {
+  background-color: #6246ea;
+  border-color: #6246ea;
+}
+
+/* AGREGAR CARRITO */
+
+.registrar-comanda-carrito{
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.registrar-comanda-carrito-arriba{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.registrar-comanda-carrito-arriba h1{
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.registrar-comanda-carrito-arriba button{
+  background-color: white;
+  color: #6246ea;
+  border: none;
+  font-size: 20px;
+}
+
+.registrar-comanda-carrito-arriba button:hover{
+  color: #2f2462;
+}
+
+.registrar-comanda-carrito-abajo h1{
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.registrar-comanda-carrito-abajo p{
+  font-size: 16px;
+}

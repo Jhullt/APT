@@ -84,7 +84,8 @@ button.ingresar-btn {
 }
 
 button.ingresar-btn:hover {
-    background-color: #4b34c4;
+    background-color: #2f2462;
+    border: none;
 }
 
 a.olvido {
