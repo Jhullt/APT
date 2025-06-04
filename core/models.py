@@ -14,6 +14,7 @@ class Categoria(models.Model):
 class Acompanamiento(models.Model):
     id_acompanamiento = models.AutoField(primary_key=True)
     nombre_acompanamiento = models.CharField(max_length=30)
+    imagen_acompanamiento = CloudinaryField('image', blank=True, null=True)
     precio_acompanamiento = models.DecimalField(max_digits=5, decimal_places=0)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
