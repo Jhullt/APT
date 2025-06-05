@@ -33,98 +33,17 @@
             <!-- CONTENEDOR MESAS-->
 
             <div class="contenedor-mesas">
-
-                <!-- MESAS -->
-
-                <div class="mesa">
-                    <!-- ESTADO DE LA MESA -->
-                    <!-- EJEMPLO MESA LIBRE -->
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
+                {% for mesa in mesas %}
+                    <div class="mesa">
+                        <div class="{{ mesa.estado_class }}">
+                            <h1>{{ mesa.estado_texto }}</h1>
+                        </div>
+                        <p>{{ mesa.pedido }}</p>
+                        <h2>Mesa {{ mesa.numero|stringformat:"02d" }}</h2>
                     </div>
-                    <p></p>
-                    <h2>Mesa 01</h2>
-                </div>
-
-                <div class="mesa">
-                    <!-- ESTADO DE LA MESA -->
-                    <!-- EJEMPLO MESA CON PEDIDO TOMADO -->
-                    <div class="mesa-estado-preparacion">
-                        <h1>En preparación</h1>
-                    </div>
-                    <p>Pedido 01</p>
-                    <h2>Mesa 02</h2>
-                </div>
-
-                <div class="mesa">
-                    <!-- ESTADO DE LA MESA -->
-                    <!-- EJEMPLO MESA CON PEDIDO LISTO PARA ENTREGAR DESDE COCINA -->
-                    <div class="mesa-estado-entregar">
-                        <h1>Esperando entrega</h1>
-                    </div>
-                    <p>Pedido 02</p>
-                    <h2>Mesa 03</h2>
-                </div>
-
-                <div class="mesa">
-                    <!-- ESTADO DE LA MESA -->
-                    <!-- EJEMPLO MESA PEDIDO ENTREGADO -->
-                    <div class="mesa-estado-entregado">
-                        <h1>Entregado</h1>
-                    </div>
-                    <p>Pedido 03</p>
-                    <h2>Mesa 04</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 05</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 06</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 07</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 08</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 09</h2>
-                </div>
-
-                <div class="mesa">
-                    <div class="mesa-estado-libre">
-                        <h1>Libre</h1>
-                    </div>
-                    <p></p>
-                    <h2>Mesa 10</h2>
-                </div>
-
+                {% endfor %}
             </div>
+            
 
         </section>
 
@@ -139,7 +58,7 @@
                 <!-- VOLVER -->
 
                 <div class="registrar-comanda-izquierda-arriba">
-                    <button><i class="fa-solid fa-less-than"></i></button>
+                    <button id="btn-volver"><i class="fa-solid fa-less-than"></i></button>
                     <h1>Menú</h1>
                 </div>
 
@@ -198,8 +117,9 @@
 
                     <div class="registrar-comanda-mesa">
                         <h1>Mesa 01</h1>
-                        <button><i class="fa-solid fa-pen-to-square"></i></button>       
+                        <button id="btn-editar-mesa"><i class="fa-solid fa-pen-to-square"></i></button>    
                     </div>
+                    
 
                 </div>
 
@@ -209,8 +129,8 @@
 
                     <!-- NUMERO DE PEDIDO -->
                     <div class="registrar-comanda-derecha-medio-n-pedido">
-                        <h1>Pedido 1</h1>
-                    </div>
+                        <h1 id="numero-pedido">Nuevo Pedido</h1>
+                    </div>                      
 
                     <!-- PEDIDOS EN CARRITO-->
                     <div class="registrar-comanda-derecha-medio-pedido-contenedor">
@@ -221,16 +141,18 @@
                 
                 <div class="registrar-comanda-derecha-precio">
                   <h1>Total:</h1>
-                  <h1>$0</h1>
+                  <h1 id="total-precio-comanda">$0</h1>
                 </div>
                 
                 <!-- BOTONES -->
-
                 <div class="registrar-comanda-derecha-buttons">
-                  <button id="cancelar-comanda">Cancelar</button>
-                  <button id="entregar-comanda">Entregar</button>
-                  <button id="enviar-comanda">Enviar</button>
+                    <button id="cancelar-comanda">Cancelar</button>
+                    <button id="entregar-comanda" style="display: none;">Entregar</button>
+                    <button id="enviar-comanda">Enviar</button>
                 </div>
+
+                <!-- Campo oculto para guardar el ID de la comanda activa -->
+                <input type="hidden" id="comanda-id" value="">
                 
               </div>
 

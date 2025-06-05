@@ -1,4 +1,4 @@
-// REZISER (mantienes esto como ya lo tenías)
+// REZISER MENÚ
 const resizer = document.querySelector('.registrar-comanda-centro');
 const leftPanel = document.querySelector('.registrar-comanda-izquierda');
 const rightPanel = document.querySelector('.registrar-comanda-derecha');
@@ -66,10 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // Cargar categoría 1 al iniciar
   cargarProductos(1);
 
-  // Cargar categoría al hacer clic
   botones.forEach(boton => {
     boton.addEventListener('click', function () {
       const categoriaId = this.dataset.id;
@@ -97,12 +95,15 @@ function agregarProductoAlCarrito(p) {
 
   item.querySelector('.btn-eliminar').addEventListener('click', () => {
     item.remove();
+    actualizarTotal();
   });
 
   carrito.appendChild(item);
+  actualizarTotal();
+
 }
 
-// Abrir modal con acompañamientos
+// ABRIR MODAL CON ACOMPAÑAMIENTOS
 function abrirModal(p) {
   productoSeleccionado = p;
   document.getElementById('modalProductoNombre').textContent = 'Selecciona acompañamiento';
@@ -129,7 +130,7 @@ function abrirModal(p) {
     });
 }
 
-// Confirmar selección y agregar al carrito
+// CONFIRMAR ACOMPAÑAMIENTO Y AGREGAR AL CARRITO
 document.getElementById('confirmarAcompanamiento').addEventListener('click', () => {
   const seleccionado = document.querySelector('input[name="acompanamiento"]:checked');
   if (!seleccionado) {
@@ -144,16 +145,98 @@ document.getElementById('confirmarAcompanamiento').addEventListener('click', () 
   modalElement.hide();
 });
 
-// Mostrar vista-carta y ocultar header + vista-mesas al hacer clic en una mesa
+// OCULTAR VISTA MESAS Y HEADER
 document.querySelectorAll('.mesa').forEach(mesa => {
   mesa.addEventListener('click', () => {
     document.getElementById('vista-mesas').style.display = 'none';
     document.getElementById('vista-carta').style.display = 'flex';
     document.getElementById('header').style.display = 'none';
+
+    const mesaTexto = mesa.querySelector('h2').textContent;
+    const numeroMesa = parseInt(mesaTexto.replace('Mesa ', ''));
+    window.mesaSeleccionada = numeroMesa;
+
+    const mesaActual = document.getElementById('mesa-actual');
+    if (mesaActual) mesaActual.textContent = `Mesa ${numeroMesa}`;
+
+    // Elementos clave
+    const btnEntregar = document.getElementById('entregar-comanda');
+    const btnEnviar = document.getElementById('enviar-comanda');
+    const carritoContenedor = document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor');
+    const h1Pedido = document.getElementById('numero-pedido');
+    const totalSpan = document.getElementById('total-precio-comanda');
+
+    // Limpiar por defecto
+    carritoContenedor.innerHTML = '';
+    if (h1Pedido) h1Pedido.textContent = 'Nuevo Pedido';
+    if (totalSpan) totalSpan.textContent = '$0';
+
+    // Consulta si hay comanda activa
+    fetch(`/api/comanda/mesa/${numeroMesa}/`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.comanda_id && data.detalle) {
+          // Mostrar número de pedido
+          if (h1Pedido) {
+            h1Pedido.textContent = `N° Pedido: ${data.comanda_id}`;
+          }
+
+          // Mostrar productos de la comanda en el carrito
+          const productos = data.detalle.split('\n');
+          productos.forEach(nombre => {
+            const item = document.createElement('div');
+            item.className = 'registrar-comanda-carrito';
+            item.innerHTML = `
+              <div class="registrar-comanda-carrito-izquierda">
+                <h1>${nombre}</h1>
+                <p>-</p>
+              </div>
+            `;
+            carritoContenedor.appendChild(item);
+          });
+
+          // Mostrar total desde backend si corresponde
+          if ([1, 2, 3].includes(data.estado_id) && data.total && totalSpan) {
+            totalSpan.textContent = `$${data.total.toLocaleString('es-CL')}`;
+          } else {
+            actualizarTotal();
+          }
+
+          // Control de botones según estado
+          if (data.estado_id == 3) {
+            btnEntregar.style.display = 'none';
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Entregado';
+          } else if (data.estado_id == 4) {
+            btnEntregar.style.display = 'none';
+            btnEnviar.disabled = false;
+            btnEnviar.textContent = 'Enviar';
+          } else {
+            btnEntregar.style.display = 'inline-block';
+            btnEntregar.dataset.id = data.comanda_id;
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Ya enviado';
+          }
+
+        } else {
+          // No hay comanda activa
+          btnEntregar.style.display = 'none';
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = 'Enviar';
+          if (h1Pedido) h1Pedido.textContent = 'Nuevo Pedido';
+          if (totalSpan) totalSpan.textContent = '$0';
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener comanda activa:', error);
+      });
   });
 });
 
-// Volver desde vista-carta a vista-mesas
+
+
+
+// CERRAR MENU Y VOLVER VISTA MESAS
 document.querySelector('.registrar-comanda-izquierda-arriba button').addEventListener('click', () => {
   document.getElementById('vista-carta').style.display = 'none';
   document.getElementById('vista-mesas').style.display = 'flex';
@@ -185,10 +268,10 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
   const fecha = ahora.toISOString().split('T')[0];
   const hora = ahora.toTimeString().split(' ')[0];
 
-  // Datos a enviar
+  // DATOS A ENVIAR COMANDA
   const data = {
     usuario: 'Natalia',
-    mesa_id: 1,
+    mesa_id: window.mesaSeleccionada || 1,
     estado_id: 1,
     detalle: detalle.join('\n'),
     precio_total_comanda: total,
@@ -208,7 +291,7 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
   .then(response => {
     if (response.ok) {
       alert('Comanda enviada correctamente');
-      // Limpiar el carrito
+      // LIMPIAR CARRITO
       document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor').innerHTML = '';
       document.querySelector('.registrar-comanda-derecha-precio h1:last-child').textContent = '$0';
     } else {
@@ -221,7 +304,7 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
   });
 });
 
-// Función para obtener el token CSRF
+// FUNCION PARA OBTENER EL TOKEN CSRF
 function getCSRFToken() {
   let cookieValue = null;
   const name = 'csrftoken';
@@ -237,3 +320,65 @@ function getCSRFToken() {
   }
   return cookieValue;
 }
+
+// ACTUALIZAR TOTAL CARRITO
+
+function actualizarTotal() {
+  const items = document.querySelectorAll('.registrar-comanda-carrito');
+  let total = 0;
+
+  items.forEach(item => {
+    const precioTexto = item.querySelector('p').textContent.trim();
+    const precio = parseInt(precioTexto.replace('$', '').replace(/\./g, '')) || 0;
+    total += precio;
+  });
+
+  const totalElemento = document.getElementById('total-precio-comanda');
+  if (totalElemento) {
+    totalElemento.textContent = `$${total.toLocaleString()}`;
+  }
+}
+
+document.getElementById('btn-volver').addEventListener('click', () => {
+  document.getElementById('vista-carta').style.display = 'none';
+  document.getElementById('vista-mesas').style.display = 'flex';
+  document.getElementById('header').style.display = 'flex';
+
+  // Reiniciar mesa seleccionada
+  window.mesaSeleccionada = null;
+
+  // Opcional: limpiar visualización del número de mesa si lo estás mostrando
+  const mesaActual = document.getElementById('mesa-actual');
+  if (mesaActual) mesaActual.textContent = '';
+});
+
+// ENTREGAR COMANDA
+
+document.getElementById('entregar-comanda').addEventListener('click', function () {
+  const comandaId = this.dataset.id;
+  if (!comandaId) return alert("No hay comanda activa");
+
+  fetch(`/comanda/entregar-garzon/${comandaId}/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.mensaje) {
+      alert('Comanda marcada como entregada');
+      location.reload();
+    } else {
+      alert('Error al entregar la comanda');
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Error de red');
+  });
+});
+
+
+
+

@@ -50,15 +50,14 @@ header h1{
   
 /* CONTENEDOR */
 
-.contenedor{
+.contenedor {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, 300px);
     gap: 20px;
     padding: 2rem;
-    max-width: 900px;
-    margin: auto;
-    align-items: center;
+    justify-content: center;
 }
+
 
 /* CARTA COMANDA COCINA */
 
