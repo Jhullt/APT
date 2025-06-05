@@ -16,7 +16,7 @@
     <!-- HEADER -->
     <header>
         <div class="menu-usuario">
-            <button><i class="fa-solid fa-bars"></i></button>
+            <button id="btn-sidebar-toggle"><i class="fa-solid fa-bars"></i></button>
         </div>
         <h1>COMANDA</h1>
         <div class="contenedor-links">
@@ -24,6 +24,15 @@
             <a href="{% url 'historial_caja' %}">HISTORIAL</a>
         </div>
     </header>
+
+    <aside id="sidebar" class="sidebar-oculto">
+        <div class="sidebar-contenido">
+        <h2>Natalia</h2>
+        <a href="{% url 'login' %}" class="btn-salir">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+        </a>
+        </div>
+    </aside>
 
     <!-- MAIN -->
     <main>

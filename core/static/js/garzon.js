@@ -1,4 +1,5 @@
 // REZISER MENÚ
+
 const resizer = document.querySelector('.registrar-comanda-centro');
 const leftPanel = document.querySelector('.registrar-comanda-izquierda');
 const rightPanel = document.querySelector('.registrar-comanda-derecha');
@@ -33,6 +34,7 @@ if (resizer) {
 }
 
 // CARGA DINÁMICA DE PRODUCTOS POR CATEGORÍA
+
 document.addEventListener('DOMContentLoaded', function () {
   const botones = document.querySelectorAll('.btn-categoria');
   const contenedor = document.querySelector('.contenedor-productos');
@@ -159,29 +161,29 @@ document.querySelectorAll('.mesa').forEach(mesa => {
     const mesaActual = document.getElementById('mesa-actual');
     if (mesaActual) mesaActual.textContent = `Mesa ${numeroMesa}`;
 
-    // Elementos clave
+    // ELEMENTOS CLAVES
     const btnEntregar = document.getElementById('entregar-comanda');
     const btnEnviar = document.getElementById('enviar-comanda');
     const carritoContenedor = document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor');
     const h1Pedido = document.getElementById('numero-pedido');
     const totalSpan = document.getElementById('total-precio-comanda');
 
-    // Limpiar por defecto
+    // LIMPIAR POR DEFECTO
     carritoContenedor.innerHTML = '';
     if (h1Pedido) h1Pedido.textContent = 'Nuevo Pedido';
     if (totalSpan) totalSpan.textContent = '$0';
 
-    // Consulta si hay comanda activa
+    // CONSULTA SI HAY COMANDA ACTIVA
     fetch(`/api/comanda/mesa/${numeroMesa}/`)
       .then(response => response.json())
       .then(data => {
         if (data.comanda_id && data.detalle) {
-          // Mostrar número de pedido
+          // MOSTRAR NUMERO DE PEDIDO
           if (h1Pedido) {
             h1Pedido.textContent = `N° Pedido: ${data.comanda_id}`;
           }
 
-          // Mostrar productos de la comanda en el carrito
+          // MOSTRAR PRODUCTOS DE LA COMANDA EN EL CARRITO
           const productos = data.detalle.split('\n');
           productos.forEach(nombre => {
             const item = document.createElement('div');
@@ -195,14 +197,13 @@ document.querySelectorAll('.mesa').forEach(mesa => {
             carritoContenedor.appendChild(item);
           });
 
-          // Mostrar total desde backend si corresponde
           if ([1, 2, 3].includes(data.estado_id) && data.total && totalSpan) {
             totalSpan.textContent = `$${data.total.toLocaleString('es-CL')}`;
           } else {
             actualizarTotal();
           }
 
-          // Control de botones según estado
+          // CONTROL DE BOTONES SEGUN ESTADO DE COMANDA
           if (data.estado_id == 3) {
             btnEntregar.style.display = 'none';
             btnEnviar.disabled = true;
@@ -219,7 +220,7 @@ document.querySelectorAll('.mesa').forEach(mesa => {
           }
 
         } else {
-          // No hay comanda activa
+          // SI NO HAY COMANDA ACTIVA
           btnEntregar.style.display = 'none';
           btnEnviar.disabled = false;
           btnEnviar.textContent = 'Enviar';
@@ -234,16 +235,12 @@ document.querySelectorAll('.mesa').forEach(mesa => {
 });
 
 
-
-
 // CERRAR MENU Y VOLVER VISTA MESAS
 document.querySelector('.registrar-comanda-izquierda-arriba button').addEventListener('click', () => {
   document.getElementById('vista-carta').style.display = 'none';
   document.getElementById('vista-mesas').style.display = 'flex';
   document.getElementById('header').style.display = 'flex';
 });
-
-
 
 // ENVIAR COMANDA
 document.getElementById('enviar-comanda').addEventListener('click', () => {
@@ -268,7 +265,6 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
   const fecha = ahora.toISOString().split('T')[0];
   const hora = ahora.toTimeString().split(' ')[0];
 
-  // DATOS A ENVIAR COMANDA
   const data = {
     usuario: 'Natalia',
     mesa_id: window.mesaSeleccionada || 1,
@@ -305,6 +301,7 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
 });
 
 // FUNCION PARA OBTENER EL TOKEN CSRF
+
 function getCSRFToken() {
   let cookieValue = null;
   const name = 'csrftoken';
@@ -344,10 +341,8 @@ document.getElementById('btn-volver').addEventListener('click', () => {
   document.getElementById('vista-mesas').style.display = 'flex';
   document.getElementById('header').style.display = 'flex';
 
-  // Reiniciar mesa seleccionada
   window.mesaSeleccionada = null;
 
-  // Opcional: limpiar visualización del número de mesa si lo estás mostrando
   const mesaActual = document.getElementById('mesa-actual');
   if (mesaActual) mesaActual.textContent = '';
 });
@@ -380,5 +375,23 @@ document.getElementById('entregar-comanda').addEventListener('click', function (
 });
 
 
+// MENU HAMBURGUESA
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnSidebar = document.getElementById('btn-sidebar-toggle');
+  const sidebar = document.getElementById('sidebar');
+
+  btnSidebar.addEventListener('click', () => {
+    sidebar.classList.toggle('mostrar');
+  });
+
+  // CERRAR MENÚ HACIENDO CLICK EN CUALQUIER LADO
+  document.addEventListener('click', (e) => {
+    const clickedInside = sidebar.contains(e.target) || btnSidebar.contains(e.target);
+    if (!clickedInside && sidebar.classList.contains('mostrar')) {
+      sidebar.classList.remove('mostrar');
+    }
+  });
+});
 
 

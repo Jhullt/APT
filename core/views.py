@@ -21,7 +21,7 @@ def login(request):
 def garzon(request):
     categorias = Categoria.objects.filter(id_categoria__in=[1, 2, 3, 4, 5])
     mesas = Mesa.objects.all()
-    comandas_activas = Comanda.objects.exclude(estado_id=4)  # Oculta las mesas pagadas
+    comandas_activas = Comanda.objects.exclude(estado_id=4)
 
     mesas_con_estado = []
     for mesa in mesas:
@@ -88,7 +88,7 @@ def crear_comanda(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            # Obtener datos del JSON
+            # OBTENER DATOS DEL JSON
             nombre_usuario = data.get('usuario')
             mesa_id = data.get('mesa_id')
             estado_id = data.get('estado_id')
@@ -96,16 +96,16 @@ def crear_comanda(request):
             precio_total_comanda = data.get('precio_total_comanda')
             fecha_str = data.get('fecha_comanda')
             hora_inicio_str = data.get('hora_inicio_comanda')
-            # Mostrar qué hora está llegando
+            # MMOSTRAR HORA A LA QUE ESTA LLEGANDO
             print("Hora recibida:", hora_inicio_str, type(hora_inicio_str))
-            # Buscar objetos relacionados
+            # BUSCAR OBJETOS RELACIONADOS
             usuario = Usuario.objects.get(nombre_usuario=nombre_usuario)
             mesa = Mesa.objects.get(id_mesa=mesa_id)
             estado = Estado.objects.get(id_estado=estado_id)
-            # Convertir fecha y hora
+            # CONVERTIR FECHA Y HORA
             fecha = datetime.strptime(fecha_str, '%Y-%m-%d').date()
             hora_inicio = datetime.strptime(f"{fecha_str} {hora_inicio_str}", '%Y-%m-%d %H:%M:%S')
-            # Crear la comanda
+            # CREAR LA COMANDA
             comanda = Comanda.objects.create(
                 usuario=usuario,
                 mesa=mesa,
@@ -183,7 +183,7 @@ def obtener_comanda_por_mesa(request, numero):
                 'comanda_id': comanda.id_comanda,
                 'estado_id': comanda.estado_id,
                 'detalle': comanda.detalle,
-                'total': comanda.precio_total_comanda  # ✅ Aquí está el dato que faltaba
+                'total': comanda.precio_total_comanda
             })
         return JsonResponse({'comanda_id': None})
     except Mesa.DoesNotExist:
