@@ -24,13 +24,13 @@
     </div>
   </header>
 
+    <!-- MENÚ HAMBURGUESA -->
+
   <aside id="sidebar" class="sidebar-oculto">
     <div class="sidebar-contenido">
-      <h2>Natalia</h2>
-      <a href="{% url 'login' %}" class="btn-salir">
-          <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-      </a>
-      </div>
+        <h2>{{ request.session.nombre_usuario }}</h2>
+        <button id="cerrar-sesion" class="btn-salir"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+    </div>
   </aside>
 
   <!-- MAIN -->
@@ -56,26 +56,30 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content p-3">
         <div class="modal-header">
-          <h5 class="modal-title text-danger">⚠ Acción irreversible</h5>
+          <h5 class="modal-title text-danger">Alerta!</h5>
         </div>
         <div class="modal-body">
-          <p>¿Deseas marcar esta mesa como pagada y liberarla? Esta acción <strong>no se puede deshacer</strong>.</p>
+          <p>¿Qué deseas hacer con esta comanda? Estas acciones <strong>no se pueden deshacer</strong>.</p>
+          <input type="hidden" id="comanda-id-modal">
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-          <button class="btn btn-danger" id="confirmarLiberacion">Sí, liberar mesa</button>
+        <div class="modal-footer d-flex flex-column gap-2">
+          <button class="btn btn-secondary w-100" id="negarLiberacion" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success w-100" id="confirmarLiberacion">Sí, liberar mesa</button>
+          <button class="btn btn-danger w-100" id="cancelarComanda">Eliminar Comanda</button>
         </div>
       </div>
     </div>
   </div>
+  
 
   <script>
     let mesaSeleccionada = null;
-
+  
+    // Seleccionar mesa y abrir modal
     document.querySelectorAll('.mesa').forEach(mesa => {
       mesa.addEventListener('click', () => {
         const numero = mesa.dataset.numero;
-
+  
         fetch(`/api/comanda/mesa/${numero}/`)
           .then(res => res.json())
           .then(data => {
@@ -87,10 +91,11 @@
           });
       });
     });
-
+  
+    // Botón para liberar mesa (finalizar comanda)
     document.getElementById('confirmarLiberacion').addEventListener('click', () => {
       if (!mesaSeleccionada) return;
-
+  
       fetch(`/comanda/finalizar/${mesaSeleccionada}/`, {
         method: 'POST',
         headers: {
@@ -106,7 +111,33 @@
           }
         });
     });
+    
+    // ELIMINAR COMANDA
 
+    document.getElementById('cancelarComanda').addEventListener('click', () => {
+      if (!mesaSeleccionada) return;
+    
+      fetch(`/comanda/eliminar/${mesaSeleccionada}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': getCSRFToken()
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.ok) {
+            location.reload();
+          } else {
+            alert('Error al eliminar la comanda.');
+          }
+        })
+        .catch(err => {
+          console.error("Error al eliminar comanda:", err);
+          alert('Error de red');
+        });
+    });
+    
+    // Obtener token CSRF (Cross-Site Request Forgery)
     function getCSRFToken() {
       let cookieValue = null;
       const name = 'csrftoken';
@@ -123,7 +154,8 @@
       return cookieValue;
     }
   </script>
-
+  
+  <script src="{% static 'js/caja.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

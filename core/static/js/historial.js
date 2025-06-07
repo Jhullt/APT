@@ -24,7 +24,7 @@ if (btnCerrarSesion) {
   btnCerrarSesion.addEventListener('click', () => {
     fetch('/logout/')
       .then(() => {
-        window.location.href = '/login/';
+        window.location.href = '/logout/';
       });
   });
 }

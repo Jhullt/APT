@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // AGREGAR PRODUCTO AL CARRITO
+
 function agregarProductoAlCarrito(p) {
   const carrito = document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor');
   const item = document.createElement('div');
@@ -106,6 +107,7 @@ function agregarProductoAlCarrito(p) {
 }
 
 // ABRIR MODAL CON ACOMPAÑAMIENTOS
+
 function abrirModal(p) {
   productoSeleccionado = p;
   document.getElementById('modalProductoNombre').textContent = 'Selecciona acompañamiento';
@@ -148,6 +150,7 @@ document.getElementById('confirmarAcompanamiento').addEventListener('click', () 
 });
 
 // OCULTAR VISTA MESAS Y HEADER
+
 document.querySelectorAll('.mesa').forEach(mesa => {
   mesa.addEventListener('click', () => {
     document.getElementById('vista-mesas').style.display = 'none';
@@ -156,34 +159,38 @@ document.querySelectorAll('.mesa').forEach(mesa => {
 
     const mesaTexto = mesa.querySelector('h2').textContent;
     const numeroMesa = parseInt(mesaTexto.replace('Mesa ', ''));
+    
     window.mesaSeleccionada = numeroMesa;
 
     const mesaActual = document.getElementById('mesa-actual');
-    if (mesaActual) mesaActual.textContent = `Mesa ${numeroMesa}`;
+    if (mesaActual) {
+      mesaActual.textContent = `Mesa ${numeroMesa.toString().padStart(2, '0')}`;
+      mesaActual.dataset.mesa = numeroMesa;
+    }
 
-    // ELEMENTOS CLAVES
+    const selectMesa = document.getElementById('select-mesa');
+    if (selectMesa) {
+      selectMesa.value = numeroMesa;
+    }
+
     const btnEntregar = document.getElementById('entregar-comanda');
     const btnEnviar = document.getElementById('enviar-comanda');
     const carritoContenedor = document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor');
     const h1Pedido = document.getElementById('numero-pedido');
     const totalSpan = document.getElementById('total-precio-comanda');
 
-    // LIMPIAR POR DEFECTO
     carritoContenedor.innerHTML = '';
     if (h1Pedido) h1Pedido.textContent = 'Nuevo Pedido';
     if (totalSpan) totalSpan.textContent = '$0';
 
-    // CONSULTA SI HAY COMANDA ACTIVA
     fetch(`/api/comanda/mesa/${numeroMesa}/`)
       .then(response => response.json())
       .then(data => {
         if (data.comanda_id && data.detalle) {
-          // MOSTRAR NUMERO DE PEDIDO
           if (h1Pedido) {
             h1Pedido.textContent = `N° Pedido: ${data.comanda_id}`;
           }
 
-          // MOSTRAR PRODUCTOS DE LA COMANDA EN EL CARRITO
           const productos = data.detalle.split('\n');
           productos.forEach(nombre => {
             const item = document.createElement('div');
@@ -203,7 +210,6 @@ document.querySelectorAll('.mesa').forEach(mesa => {
             actualizarTotal();
           }
 
-          // CONTROL DE BOTONES SEGUN ESTADO DE COMANDA
           if (data.estado_id == 3) {
             btnEntregar.style.display = 'none';
             btnEnviar.disabled = true;
@@ -220,7 +226,6 @@ document.querySelectorAll('.mesa').forEach(mesa => {
           }
 
         } else {
-          // SI NO HAY COMANDA ACTIVA
           btnEntregar.style.display = 'none';
           btnEnviar.disabled = false;
           btnEnviar.textContent = 'Enviar';
@@ -233,6 +238,7 @@ document.querySelectorAll('.mesa').forEach(mesa => {
       });
   });
 });
+
 
 
 // CERRAR MENU Y VOLVER VISTA MESAS
@@ -265,9 +271,10 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
   const fecha = ahora.toISOString().split('T')[0];
   const hora = ahora.toTimeString().split(' ')[0];
 
+  const usuarioLogueado = document.getElementById('usuario-logueado')?.value || 'Garzón';
   const data = {
-    usuario: 'Natalia',
-    mesa_id: window.mesaSeleccionada || 1,
+    usuario: usuarioLogueado,
+    mesa_id: parseInt(document.getElementById('select-mesa').value),
     estado_id: 1,
     detalle: detalle.join('\n'),
     precio_total_comanda: total,
@@ -290,6 +297,7 @@ document.getElementById('enviar-comanda').addEventListener('click', () => {
       // LIMPIAR CARRITO
       document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor').innerHTML = '';
       document.querySelector('.registrar-comanda-derecha-precio h1:last-child').textContent = '$0';
+      location.reload();
     } else {
       alert('Error al enviar la comanda');
     }
@@ -385,7 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.toggle('mostrar');
   });
 
-  // CERRAR MENÚ HACIENDO CLICK EN CUALQUIER LADO
   document.addEventListener('click', (e) => {
     const clickedInside = sidebar.contains(e.target) || btnSidebar.contains(e.target);
     if (!clickedInside && sidebar.classList.contains('mostrar')) {
@@ -394,4 +401,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// CERRAR SESIÓN
+
+const btnCerrarSesion = document.getElementById('cerrar-sesion');
+
+if (btnCerrarSesion) {
+  btnCerrarSesion.addEventListener('click', () => {
+    fetch('/logout/')
+      .then(() => {
+        window.location.href = '/login/';
+      });
+  });
+}
+
+// EDITAR MESA
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnEditar = document.getElementById('btn-editar-mesa');
+  const selectMesa = document.getElementById('select-mesa');
+  const h1Mesa = document.getElementById('mesa-actual');
+
+  let mesaSeleccionada = parseInt(h1Mesa?.dataset.mesa || 1);
+
+  if (!btnEditar || !selectMesa || !h1Mesa) return;
+
+  btnEditar.addEventListener('click', () => {
+    h1Mesa.style.display = 'none';
+    selectMesa.style.display = 'inline-block';
+
+    selectMesa.value = mesaSeleccionada.toString(); 
+    selectMesa.focus();
+  });
+
+  selectMesa.addEventListener('change', () => {
+    const nuevaMesa = selectMesa.value;
+    mesaSeleccionada = parseInt(nuevaMesa);
+
+    h1Mesa.textContent = `Mesa ${nuevaMesa.toString().padStart(2, '0')}`;
+    h1Mesa.dataset.mesa = nuevaMesa;
+    selectMesa.style.display = 'none';
+    h1Mesa.style.display = 'inline-block';
+  });
+
+  window.mesaSeleccionada = mesaSeleccionada;
+});
 

@@ -20,12 +20,12 @@
         <h1>COMANDA</h1>
     </header>
 
+    <!-- MENÚ HAMBURGUESA -->
+
     <aside id="sidebar" class="sidebar-oculto">
         <div class="sidebar-contenido">
-        <h2>Natalia</h2>
-        <a href="{% url 'login' %}" class="btn-salir">
-            <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-        </a>
+            <h2>{{ request.session.nombre_usuario }}</h2>
+            <button id="cerrar-sesion" class="btn-salir"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         </div>
     </aside>
 

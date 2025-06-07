@@ -614,7 +614,7 @@ header h1{
   border-color: #6246ea;
 }
 
-/* MENU HAMBURGUESA */
+/* MENÚ HAMBURGUESA */
 
 #sidebar {
   position: fixed;
@@ -661,7 +661,7 @@ header h1{
   color: #333;
   text-decoration: none;
   font-weight: 600;
-  border-top: 1px solid #ddd;
+  border: none;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -676,6 +676,3 @@ header h1{
   justify-content: center;
   align-items: center;
 }
-
-
-

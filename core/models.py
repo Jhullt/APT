@@ -1,7 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 
-# CATEGORIA
+# Categoria
 class Categoria(models.Model):
     id_categoria = models.AutoField(primary_key=True)
     nombre_categoria = models.CharField(max_length=15)
@@ -10,7 +10,7 @@ class Categoria(models.Model):
         return self.nombre_categoria
 
 
-# ACOMPANAMIENTO
+# Acompañamiento
 class Acompanamiento(models.Model):
     id_acompanamiento = models.AutoField(primary_key=True)
     nombre_acompanamiento = models.CharField(max_length=30)
@@ -22,7 +22,7 @@ class Acompanamiento(models.Model):
         return self.nombre_acompanamiento
 
 
-# PRODUCTO
+# Producto
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -36,7 +36,7 @@ class Producto(models.Model):
         return self.nombre_producto
 
 
-# ESTADO
+# Estado
 class Estado(models.Model):
     id_estado = models.AutoField(primary_key=True)
     nombre_estado = models.CharField(max_length=20)
@@ -45,7 +45,7 @@ class Estado(models.Model):
         return self.nombre_estado
 
 
-# MESA
+# Mesa
 class Mesa(models.Model):
     id_mesa = models.AutoField(primary_key=True)
     numero_mesa = models.PositiveSmallIntegerField()
@@ -54,7 +54,7 @@ class Mesa(models.Model):
         return f"Mesa {self.numero_mesa:02d}"
 
 
-# ROL
+# Rol
 class Rol(models.Model):
     id_rol = models.AutoField(primary_key=True)
     nombre_rol = models.CharField(max_length=15)
@@ -63,7 +63,7 @@ class Rol(models.Model):
         return self.nombre_rol
 
 
-# USUARIO
+# Usuario
 class Usuario(models.Model):
     id_usuario = models.AutoField(primary_key=True)
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
@@ -75,7 +75,7 @@ class Usuario(models.Model):
         return self.nombre_usuario
 
 
-# COMANDA
+# Comanda
 class Comanda(models.Model):
     id_comanda = models.AutoField(primary_key=True)
     mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)

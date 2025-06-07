@@ -1,7 +1,8 @@
 body {
     background: linear-gradient(to right, #6246ea, #a79ae8);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     margin: 0;
+    padding: 0;
 }
 
 main {
@@ -36,9 +37,12 @@ section img {
 }
 
 .contenedor-login h1 {
-    font-size: 14px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    margin: 0 0 5px 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    cursor: default;
 }
 
 .contenedor-login input {
@@ -68,8 +72,18 @@ section img {
 
 .checkbox-container input {
     margin-right: 8px;
+    width: 15px;
+    height: 24px;
 }
 
+.checkbox-container label{
+    font-size: 16px;
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+    accent-color: #6246ea;
+}
+  
 button.ingresar-btn {
     background-color: #6246ea;
     color: white;
@@ -81,20 +95,56 @@ button.ingresar-btn {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 button.ingresar-btn:hover {
     background-color: #2f2462;
     border: none;
+    font-weight: bold;
 }
 
-a.olvido {
-    font-size: 13px;
+.btn-olvidar{
+    font-size: 14px;
     color: #ea4646;
     text-decoration: none;
     transition: color 0.3s;
+    border: none;
+    background-color: white;
 }
 
-a.olvido:hover {
+.btn-olvidar {
     color: #c13535;
+}
+
+.form-control:focus{
+    border-color: #a79ae8 !important;
+    box-shadow: 0 0 0 2px #e0dcfa !important;
+}
+
+#form-recuperar button{
+    color: white;
+    background-color: #6246ea;
+    width: 100%;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#form-recuperar button:hover{
+    color: white;
+    background-color: #2f2462;
+}
+
+#cancelarpassword{
+    background-color: #ea4646 !important;
+    border: none;
+    margin-top: 10px;
+    color: white;
+}
+
+#cancelarpassword:hover{
+    background-color: #c13535 !important;
+    border: none;
+    margin-top: 10px;
+    color: white;
 }

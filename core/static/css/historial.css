@@ -208,7 +208,7 @@ input[type="date"] {
     border: none;
 }
 
-/* MENU HAMBURGUESA */
+/* MENÚ HAMBURGUESA */
 
 #sidebar {
     position: fixed;
@@ -224,28 +224,28 @@ input[type="date"] {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
+}
   
-  #sidebar.mostrar {
+#sidebar.mostrar {
     left: 0;
-  }
+}
   
-  .sidebar-contenido {
+.sidebar-contenido {
     display: flex;
     flex-direction: column;
     height: 100%;
     justify-content: space-between;
-  }
+}
   
-  .nombre-usuario {
+.nombre-usuario {
     font-size: 1.6rem;
     font-weight: bold;
     color: #333;
     text-align: center;
     margin-top: 1rem;
-  }
+}
   
-  .btn-salir {
+.btn-salir {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -255,18 +255,18 @@ input[type="date"] {
     color: #333;
     text-decoration: none;
     font-weight: 600;
-    border-top: 1px solid #ddd;
+    border: none;
     transition: background-color 0.2s ease, color 0.2s ease;
-  }
+}
   
-  .btn-salir:hover {
+.btn-salir:hover {
     background-color: #6246ea;
     color: white;
-  }
+}
   
-  .sidebar-contenido h2{
+.sidebar-contenido h2{
     font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}

@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.classList.toggle('mostrar');
     });
   
-    document.addEventListener('click', (e) => {
-      const clickedInside = sidebar.contains(e.target) || btnSidebar.contains(e.target);
-      if (!clickedInside && sidebar.classList.contains('mostrar')) {
-        sidebar.classList.remove('mostrar');
-      }
-    });
+document.addEventListener('click', (e) => {
+  const clickedInside = sidebar.contains(e.target) || btnSidebar.contains(e.target);
+    if (!clickedInside && sidebar.classList.contains('mostrar')) {
+      sidebar.classList.remove('mostrar');
+    }
   });
+});
 
 // CERRAR SESIÓN
 
@@ -24,7 +24,8 @@ if (btnCerrarSesion) {
   btnCerrarSesion.addEventListener('click', () => {
     fetch('/logout/')
       .then(() => {
-        window.location.href = '/login/';
+        window.location.href = '/logout/';
       });
   });
 }
+  
