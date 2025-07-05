@@ -8,7 +8,7 @@ body {
 /* HEADER */
   
 header {
-    background-color: #6246ea;
+    background-color: #243346;
     display: flex;
     flex-direction: column;
     height: 146px;
@@ -31,16 +31,16 @@ header h1{
 }
   
 .menu-usuario button{
-    background-color: #6246ea;
+    background-color: #243346;
     border: none;
     color: white;
     cursor: pointer;
 }
   
 .menu-usuario button:hover{
-    background-color: #6246ea;
+    background-color: #243346;
     border: none;
-    color: #2f2462;
+    color: #9cb2c7;
     cursor: pointer;
 }
   
@@ -62,9 +62,9 @@ header h1{
 /* CARTA COMANDA COCINA */
 
 .carta-comanda-cocina{
-    display: flex;
+    display: flex;  
     flex-direction: column;
-    height: 300px;
+    height: 400px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -77,7 +77,7 @@ header h1{
 
 .info-pedido-cocina{
     display: flex;
-    background-color: #6246ea;
+    background-color: #243346;
     height: 80px;
     justify-content: space-between;
     padding: 10px;
@@ -130,13 +130,15 @@ header h1{
 
 /* PEDIDO COMANDA */
 
-.productos-comanda{
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-    padding: 22px;
-    width: 100%;
-    height: 50%;
+.productos-comanda {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  padding: 22px;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .productos-comanda p{
@@ -147,24 +149,24 @@ header h1{
 
 /* BOTON ENTREGAR */
 
-#pedido-cocinado{
-    background-color: #6246ea;
+.btn-entregar-comanda{
+    background-color: #243346;
     color: white;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     width: 160px;
     margin-bottom: 20px;
     height: 60px;
 }
 
-#pedido-cocinado:hover{
-    background-color: #2f2462;
+.btn-entregar-comanda:hover{
+    background-color: #9cb2c7;
     color: white;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     width: 160px;   
     margin-bottom: 20px;
@@ -174,62 +176,224 @@ header h1{
 /* MENÚ HAMBURGUESA */
 
 #sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    height: 100%;
-    width: 250px;
-    background-color: #ffffff;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
-    padding: 2rem 1rem;
-    z-index: 2000;
-    transition: left 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-  
+
 #sidebar.mostrar {
-    left: 0;
+  left: 0;
 }
-  
-.sidebar-contenido {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
+
+.sidebar-usuario {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  column-gap: 15px;
 }
-  
-.nombre-usuario {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin-top: 1rem;
+
+.sidebar-usuario-icono {
+  background-color: #243346;
+  height: 56.8px;
+  width: 56.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
-  
-.btn-salir {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    text-align: center;
-    background-color: transparent;
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-    border: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
+
+.sidebar-usuario i {
+  background-color: #243346;
+  color: white;
+  font-size: 30px;
 }
-  
-.btn-salir:hover {
-    background-color: #6246ea;
-    color: white;
+
+.siderbar-usuario-datos h1 {
+  font-size: 17px;
+  font-weight: bold;
+  cursor: default;
+
 }
-  
-.sidebar-contenido h2{
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.siderbar-usuario-datos h2 {
+  font-size: 16px;
+  cursor: default;
+}
+
+.sidebar-salir {
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-salir button {
+  background-color: white;
+  border: none;
+  display: flex;
+  column-gap: 27px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 40px;
+}
+
+.sidebar-salir button:hover {
+  background-color: #9cb2c7;
+  color: white;
+}
+
+/* CONFIRMACIÓN VISUAL DE LA COMANDA ENVIADA A GARZÓN */
+
+.overlay-comanda{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda.oculto{display:none;}
+
+.oculto {
+  display: none;
+}
+
+.overlay-comanda img{width:120px;}
+
+.overlay-comanda h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+/* ERROR AL ENTREGAR COMANDA */
+
+.overlay-comanda-1{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-1{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-1.oculto{display:none;}
+
+.overlay-comanda-1 img{width:120px;}
+
+.overlay-comanda-1 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-1{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-1:hover{
+background-color: #76121c;
+}
+
+/* ERROR DE CONEXIÓN AL ENTREGAR LA COMANDA  */
+
+.overlay-comanda-2{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-2{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-2.oculto{display:none;}
+
+.overlay-comanda-2 img{width:120px;}
+
+.overlay-comanda-2 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-2{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-2:hover{
+background-color: #76121c;
 }

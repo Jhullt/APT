@@ -1,0 +1,107 @@
+{% load static %}
+{% load math_extras %}
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMANDA</title>
+
+    <!-- BOOSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estadisticas.css' %}">
+
+    <!-- ÍCONO DE LA PESTAÑA -->
+    <link rel="icon" href="{% static 'icons/logo.ico' %}" type="image/x-icon">
+        
+    <!-- APEXCHARTS -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="menu-usuario">
+        <button id="btn-sidebar-toggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <h1>COMANDA</h1>
+        <div class="contenedor-links">
+        <a href="{% url 'productos' %}">PRODUCTOS</a>
+        <a href="{% url 'estadisticas' %}">COMANDAS</a>
+        </div>
+    </header>
+
+  <!-- MENÚ HAMBURGUESA -->
+  <aside id="sidebar" class="sidebar-oculto">
+    <div class="sidebar-usuario">
+      <div class="sidebar-usuario-icono"><i class="fa-solid fa-lock"></i></div>
+      <div class="siderbar-usuario-datos">
+        <h1>Bienvenid@!</h1>
+        <h2>{{ request.session.nombre_usuario }}</h2>
+      </div>
+    </div>
+    <div class="sidebar-salir">
+      <button id="cerrar-sesion" class="btn-salir">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>    
+    <div class="card shadow-sm border-0 rounded-4" style="max-width: 800px; margin: auto;">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold mb-0">Comandas</h5>
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              Últimos {{ rango }} meses
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item {% if rango == 3 %}active{% endif %}" href="?m=3">Últimos 3 meses</a></li>
+              <li><a class="dropdown-item {% if rango == 6 %}active{% endif %}" href="?m=6">Últimos 6 meses</a></li>
+              <li><a class="dropdown-item {% if rango == 12 %}active{% endif %}" href="?m=12">Últimos 12 meses</a></li>
+            </ul>
+          </div>
+        </div>
+  
+        <div class="row text-center mb-4">
+          <div class="col">
+            <span class="badge bg-primary rounded-circle me-1" style="width: 10px; height: 10px;">&nbsp;</span>
+            <span class="text-muted">Completadas</span>
+            <h5 class="fw-bold mb-0">{{ total_4 }}</h5>
+          </div>
+          <div class="col">
+            <span class="badge bg-danger rounded-circle me-1" style="width: 10px; height: 10px;">&nbsp;</span>
+            <span class="text-muted">Canceladas</span>
+            <h5 class="fw-bold mb-0">{{ total_5 }}</h5>
+          </div>
+        </div>
+  
+        <div id="chart"></div>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    const MESES  = {{ meses  |default:"[]"|safe }};
+    const SERIE4 = {{ serie4 |default:"[]"|safe }};
+    const SERIE5 = {{ serie5 |default:"[]"|safe }};
+  </script>
+  
+  <!-- JS -->
+  <script src="{% static 'js/estadisticas.js' %}"></script>
+  <script src="{% static 'js/menu.js' %}"></script>
+  <!-- BOOSTRAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  
+</body>
+</html>

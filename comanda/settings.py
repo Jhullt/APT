@@ -56,10 +56,10 @@ WSGI_APPLICATION = 'comanda.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'comanda_db',
-        'USER': 'comanda_db_user',
-        'PASSWORD': 'SNc2nWrQjo637L4mExSgpMnitiC6IDU0',
-        'HOST': 'dpg-d0v8fmh5pdvs7387cb60-a.oregon-postgres.render.com',
+        'NAME': 'comanda_db_jz5j',
+        'USER': 'comanda_db_jz5j_user',
+        'PASSWORD': 'hWsZ8rQnazykl3aorYXpNlB28fiI6Msy',
+        'HOST': 'dpg-d1jh63a4d50c7380ppqg-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }

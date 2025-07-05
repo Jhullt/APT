@@ -1,0 +1,21 @@
+main{
+    padding: 20px;
+}
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: #243346 !important;
+}
+
+.bg-danger {
+    --bs-bg-opacity: 1;
+    background-color: #bb2633 !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #bb2633;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+    background-color: #243346;
+}

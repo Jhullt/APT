@@ -1,0 +1,64 @@
+main{
+  padding: 20px;
+}
+
+/* PRODUCTOS MAS VENDIDOS */
+
+.contenedor-productos-mas-vendidos {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* PARTE DE ARRIBA */
+
+.contenedor-arriba {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* TITULO */
+
+.contenedor-arriba-izquierda h1{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* SELECT */
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.tabla-mas-vendidos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-mas-vendidos thead th {
+  background-color: #f5f5f5;
+  text-align: left;
+  padding: 12px;
+}
+
+.tabla-mas-vendidos td {
+  padding: 15px 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+
+.producto-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.producto-info img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 8px;
+}

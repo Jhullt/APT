@@ -1,0 +1,145 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f2f2f2;
+}
+
+/* HEADER */
+
+header {
+  background-color: #243346;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1 {
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  width: 100%;
+}
+
+.menu-usuario {
+  display: flex;
+  padding: 8px;
+}
+
+.menu-usuario button {
+  background-color: #243346;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-usuario button:hover {
+  background-color: #243346;
+  color: #9cb2c7;
+}
+
+.menu-usuario i {
+  font-size: 25px;
+}
+
+.contenedor-links {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 50px;
+}
+
+.contenedor-links a {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.contenedor-links a:hover {
+  color: #9cb2c7;
+}
+
+/* MENÚ HAMBURGUESA */
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#sidebar.mostrar {
+  left: 0;
+}
+
+.sidebar-usuario {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  column-gap: 15px;
+}
+
+.sidebar-usuario-icono {
+  background-color: #243346;
+  height: 56.8px;
+  width: 56.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.sidebar-usuario i {
+  background-color: #243346;
+  color: white;
+  font-size: 30px;
+}
+
+.siderbar-usuario-datos h1 {
+  font-size: 17px;
+  font-weight: bold;
+  cursor: default;
+
+}
+
+.siderbar-usuario-datos h2 {
+  font-size: 16px;
+  cursor: default;
+}
+
+.sidebar-salir {
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-salir button {
+  background-color: white;
+  border: none;
+  display: flex;
+  column-gap: 27px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 40px;
+}
+
+.sidebar-salir button:hover {
+  background-color: #9cb2c7;
+  color: white;
+}

@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(to right, #6246ea, #a79ae8);
+    background: linear-gradient(to right, #243346, #243346, #425164);
     font-family: 'Poppins', sans-serif !important;
     margin: 0;
     padding: 0;
@@ -55,37 +55,68 @@ section img {
     font-size: 14px;
 }
 
-.contenedor-login input:focus {
-    border-color: #a79ae8;
-    box-shadow: 0 0 0 2px #e0dcfa;
+.contenedor-login input:focus{
+  border-color:#bb2633;
+  box-shadow:0 0 0 2px rgba(187,38,51,.25);
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+
+.input-icon-wrapper{
+  position: relative;
+  width: 100%;
+}
+
+/* ➊  padding extra a la derecha para dejar espacio al icono
+   ➋  igualamos line-height a la altura del input para que
+       el texto y el icono queden perfectamente centrados */
+.input-icon-wrapper input{
+  height: 35px;
+  line-height: 35px;
+  padding-right: 48px;     /* ← 48 px hace hueco al ojo */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .3s;
+}
+
+.password-eye{
+  background: #fff url("data:image/svg+xml,%3Csvg ... ojo en svg ...%3C/svg%3E") no-repeat
+              right 12px center / 18px 18px;
+  padding-right: 48px;        /* deja hueco al icono */
+  border:1px solid #ccc;
+  border-radius:5px;
+  height:35px;
+  line-height:35px;
+}
+.password-eye.show{
+  background-image:url("data:image/svg+xml,%3Csvg ... ojo-cerrado ...%3C/svg%3E");
 }
 
 
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-    font-size: 13px;
-    color: #333;
+[hidden] { display:none; }
+#error { animation: aparecer .4s ease-in-out; }
+
+#error {
+    font-size: 14px;
+    color: #bb2633;
+    animation: aparecer 0.4s ease-in-out;
 }
 
-.checkbox-container input {
-    margin-right: 8px;
-    width: 15px;
-    height: 24px;
-}
-
-.checkbox-container label{
-    font-size: 16px;
-}
-
-.checkbox-container input[type="checkbox"]:checked {
-    accent-color: #6246ea;
-}
+@keyframes aparecer {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   
 button.ingresar-btn {
-    background-color: #6246ea;
+    background-color: #bb2633;
     color: white;
     border: none;
     width: 100%;
@@ -99,52 +130,8 @@ button.ingresar-btn {
 }
 
 button.ingresar-btn:hover {
-    background-color: #2f2462;
+    background-color: #76121c;
     border: none;
     font-weight: bold;
 }
 
-.btn-olvidar{
-    font-size: 14px;
-    color: #ea4646;
-    text-decoration: none;
-    transition: color 0.3s;
-    border: none;
-    background-color: white;
-}
-
-.btn-olvidar {
-    color: #c13535;
-}
-
-.form-control:focus{
-    border-color: #a79ae8 !important;
-    box-shadow: 0 0 0 2px #e0dcfa !important;
-}
-
-#form-recuperar button{
-    color: white;
-    background-color: #6246ea;
-    width: 100%;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#form-recuperar button:hover{
-    color: white;
-    background-color: #2f2462;
-}
-
-#cancelarpassword{
-    background-color: #ea4646 !important;
-    border: none;
-    margin-top: 10px;
-    color: white;
-}
-
-#cancelarpassword:hover{
-    background-color: #c13535 !important;
-    border: none;
-    margin-top: 10px;
-    color: white;
-}

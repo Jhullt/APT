@@ -1,80 +1,128 @@
-# Funciones principales de Django
-from django.shortcuts import render, redirect, get_object_or_404  # Mostrar vistas, redireccionar, obtener objetos
-from django.http import JsonResponse  # Responder con JSON
-from django.views.decorators.csrf import csrf_exempt  # Desactivar CSRF (para pruebas o API)
-from django.contrib import messages  # Mostrar mensajes de éxito o error
+# LIBRERÍAS DE PYTHON ESTÁNDAR
+# PERMITE LEER Y ESCRIBIR ARCHIVOS JSON
+import json
+# MANEJA TEXTOS Y CARACTERES
+import string
+# GENERA VALORES ALEATORIOS COMO CÓDIGOS
+import random
+# PERMITE USAR EXPRESIONES REGULARES
+import re
+# MANEJA FECHAS Y HORAS
+from datetime import datetime, date, timedelta
 
-# Fechas y horas
-from django.utils import timezone  # Hora actual
+# LIBRERÍAS EXTERNAS
+# PERMITE HACER SOLICITUDES HTTP
+import requests
+
+# PERMITE SUMAR O RESTAR MESES, AÑOS, ETC.
+from dateutil.relativedelta import relativedelta
+
+# FUNCIONES DE VISTA EN DJANGO
+# RENDERIZA PÁGINAS HTML, REDIRECCIONA Y OBTIENE OBJETOS DE LA BASE DE DATOS
+from django.shortcuts import render, redirect, get_object_or_404
+
+# RETORNA RESPUESTAS EN FORMATO JSON
+from django.http import JsonResponse
+
+# DESACTIVA LA PROTECCIÓN CSRF EN ALGUNAS VISTAS
+from django.views.decorators.csrf import csrf_exempt
+
+# MUESTRA MENSAJES AL USUARIO EN LA PÁGINA
+from django.contrib import messages
+
+# UTILIDADES DE FECHA EN DJANGO
+# PERMITE USAR ZONAS HORARIAS CORRECTAS
+from django.utils import timezone
+
+# OBTIENE LA HORA ACTUAL CON ZONA HORARIA
 from django.utils.timezone import now
-from django.utils.dateparse import parse_date  # Convertir texto a fecha
 
-# Consultas y serialización
-from django.db.models import Q  # Filtros avanzados (OR, AND, etc.)
-from django.core import serializers  # Convertir objetos a JSON
+# CONVIERTE TEXTO EN FORMATO FECHA
+from django.utils.dateparse import parse_date
 
-# Librerías estándar de Python
-import json  # Leer y escribir JSON
-from datetime import datetime  # Trabajar con fechas
-import string, random  # Generar códigos aleatorios
+# CONSULTAS Y AGRUPACIONES EN DJANGO
+# PERMITE FILTRAR USANDO CONDICIONES COMO OR, AND, ETC.
+from django.db.models import Q, Count, Sum
 
-# Librerías externas
-import requests  # Enviar correos o hacer solicitudes HTTP
+# AGRUPA RESULTADOS POR MES
+from django.db.models.functions import TruncMonth
 
-# Modelos del sistema
-from .models import Producto, Categoria, Comanda, Usuario, Mesa, Estado
+# MANEJA TRANSACCIONES PARA MODIFICAR VARIAS TABLAS A LA VEZ
+from django.db import transaction
 
-# Configuración del proyecto
-from django.conf import settings  # Acceder a configuraciones globales
+# CONVIERTE OBJETOS A FORMATO JSON U OTROS
+from django.core import serializers
 
+# CONFIGURACIÓN GLOBAL DEL PROYECTO
+from django.conf import settings
+
+# MODELOS DEL SISTEMA
+from .models import Producto, Categoria, Comanda, Usuario, Mesa, Estado, Acompanamiento, DetalleComanda
+
+# ------------ LOGIN Y CIERRE DE SESIÓN ------------
 
 # LOGIN
-
 @csrf_exempt
 def login(request):
+    error = False
+
     if request.method == 'POST':
-        correo = request.POST.get('correo_usuario')
-        password = request.POST.get('password_usuario')
+        correo    = request.POST.get('correo_usuario')
+        password  = request.POST.get('password_usuario')
 
         try:
-            usuario = Usuario.objects.get(correo_usuario=correo, password_usuario=password)
-            rol_id = usuario.rol_id
+            usuario = Usuario.objects.get(
+                correo_usuario=correo,
+                password_usuario=password
+            )
 
             request.session['nombre_usuario'] = usuario.nombre_usuario
 
-            if rol_id == 1:
-                return redirect('cocina')
-            elif rol_id == 2:
-                return redirect('garzon')
-            elif rol_id == 3:
-                return redirect('caja')
-            elif rol_id == 4:
-                return redirect('admin')
-            else:
-                messages.error(request, "Rol no válido.")
-                return redirect('login')
+            destino = {
+                1: 'cocina',
+                2: 'garzon',
+                3: 'caja',
+                4: 'productos',
+            }.get(usuario.rol_id, 'login')
+
+            return redirect(destino)
 
         except Usuario.DoesNotExist:
-            messages.error(request, "Credenciales inválidas.")
-            return redirect('login')
+            error = True
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'error': error})
+
+# CERRAR SESIÓN
+
+def logout(request):
+    request.session.flush()
+    return redirect('/')
+
+# ------------ FIN LOGIN Y CIERRE DE SESIÓN ------------
 
 
-# VISTA GARZON MESAS
+
+# ------------ VISTA DE GARZON ------------
 
 def garzon(request):
     categorias = Categoria.objects.filter(id_categoria__in=[1, 2, 3, 4, 5])
     mesas = Mesa.objects.all()
-    comandas_activas = Comanda.objects.exclude(estado_id=4)
+    comandas_activas = Comanda.objects.exclude(estado_id__in=[4, 5])
 
     mesas_con_estado = []
     mesas_ocupadas_numeros = set()
 
     for mesa in mesas:
-        comanda = comandas_activas.filter(mesa=mesa).order_by('-id_comanda').first()
+        comanda = (
+            comandas_activas
+            .filter(mesa=mesa)
+            .order_by('-id_comanda')
+            .first()
+        )
+
         if comanda:
             mesas_ocupadas_numeros.add(mesa.numero_mesa)
+
             if comanda.estado_id == 1:
                 estado_class = 'mesa-estado-preparacion'
             elif comanda.estado_id == 2:
@@ -85,35 +133,189 @@ def garzon(request):
                 estado_class = 'mesa-estado-libre'
 
             mesas_con_estado.append({
-                'numero': mesa.numero_mesa,
-                'estado_class': estado_class,
-                'estado_texto': comanda.estado.nombre_estado,
-                'pedido': f'Pedido {comanda.id_comanda}'
+                'numero'       : mesa.numero_mesa,
+                'estado_class' : estado_class,
+                'estado_texto' : comanda.estado.nombre_estado,
+                'pedido'       : f'Pedido {comanda.id_comanda}',
             })
         else:
             mesas_con_estado.append({
-                'numero': mesa.numero_mesa,
-                'estado_class': 'mesa-estado-libre',
-                'estado_texto': 'Libre',
-                'pedido': ''
+                'numero'       : mesa.numero_mesa,
+                'estado_class' : 'mesa-estado-libre',
+                'estado_texto' : 'Libre',
+                'pedido'       : '',
             })
 
-    mesas_disponibles = Mesa.objects.exclude(numero_mesa__in=mesas_ocupadas_numeros)
+    mesas_disponibles = Mesa.objects.exclude(
+        numero_mesa__in=mesas_ocupadas_numeros
+    )
 
-    mesa_actual = mesas_con_estado[0]['numero'] if mesas_con_estado else None
-    mesa_actual_ocupada = mesa_actual in mesas_ocupadas_numeros
-    mesa_obj = Mesa.objects.filter(numero_mesa=mesa_actual).first()
+    mesas_disponibles_numeros = [
+        m.numero_mesa for m in mesas_disponibles
+    ]
+
+    mesa_actual          = mesas_con_estado[0]['numero'] if mesas_con_estado else None
+    mesa_actual_ocupada  = mesa_actual in mesas_ocupadas_numeros
+    mesa_obj             = Mesa.objects.filter(numero_mesa=mesa_actual).first()
 
     return render(request, 'garzon.html', {
-        'categorias': categorias,
-        'mesas': mesas_con_estado,
-        'mesas_disponibles': mesas_disponibles,
-        'mesa_actual_ocupada': mesa_actual_ocupada,
-        'mesa': mesa_obj
+        'categorias'                : categorias,
+        'mesas'                     : mesas_con_estado,
+        'mesas_disponibles'         : mesas_disponibles,
+        'mesa_actual_ocupada'       : mesa_actual_ocupada,
+        'mesa'                      : mesa_obj,
+        'mesas_disponibles_numeros' : mesas_disponibles_numeros,
     })
 
-# OBTENER PRODUCTOS POR ID DE CATEGORIA EN LA BASE DE DATOS
+# COMANDAS CON ESTADO ID 1, 2 Y 3 APAREZCAN
+@csrf_exempt
+def obtener_comanda_por_mesa(request, numero):
+    try:
+        mesa = Mesa.objects.get(numero_mesa=numero)
 
+        comanda = (
+            Comanda.objects
+            .filter(mesa=mesa)
+            .exclude(estado_id__in=[4, 5])
+            .order_by('-id_comanda')
+            .first()
+        )
+
+        if not comanda:
+            return JsonResponse({'comanda_id': None})
+
+        productos = []
+        total     = 0
+
+        detalles = (
+            DetalleComanda.objects
+            .select_related('producto', 'acompanamiento')
+            .filter(comanda=comanda)
+        )
+
+        for d in detalles:
+
+            partes = []
+            if d.producto:
+                partes.append(d.producto.nombre_producto)
+            if d.acompanamiento:
+                partes.append(d.acompanamiento.nombre_acompanamiento)
+            nombre = ' - '.join(partes)
+
+
+            precio_unitario = 0
+            if d.producto:
+                precio_unitario += d.producto.precio_producto
+
+            if d.acompanamiento and not (
+                d.producto and d.producto.acompanamiento_producto
+            ):
+                precio_unitario += d.acompanamiento.precio_acompanamiento
+
+            subtotal = precio_unitario * d.cantidad_detalle_comanda
+            total   += subtotal
+
+            productos.append({
+                'product_id'        : d.producto_id,
+                'acompanamiento_id' : d.acompanamiento_id,
+                'cantidad'          : d.cantidad_detalle_comanda,
+                'precio_unitario'   : precio_unitario,
+                'nombre'            : nombre,
+            })
+
+        return JsonResponse({
+            'comanda_id': comanda.pk,
+            'estado_id' : comanda.estado_id,
+            'items'     : productos,
+            'total'     : total,
+        })
+
+    except Mesa.DoesNotExist:
+        return JsonResponse({'error': 'Mesa no encontrada'}, status=404)
+
+# CREAR COMANDA
+@csrf_exempt
+def crear_comanda(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+    try:
+        data = json.loads(request.body or '{}')
+
+        usuario = Usuario.objects.get(
+            nombre_usuario=request.session['nombre_usuario']
+        )
+        mesa   = Mesa.objects.get(pk=data['mesa_id'])
+        estado = Estado.objects.get(pk=data['estado_id'])
+
+        ahora = timezone.localtime()
+
+        with transaction.atomic():
+            comanda = Comanda.objects.create(
+                usuario              = usuario,
+                mesa                 = mesa,
+                estado               = estado,
+                precio_total_comanda = data['precio_total_comanda'],
+                fecha_comanda        = ahora.date(),
+                hora_inicio_comanda  = ahora
+            )
+
+            for it in data.get('items', []):
+                DetalleComanda.objects.create(
+                    comanda                   = comanda,
+                    producto_id              = it.get('product_id'),
+                    acompanamiento_id        = it.get('acompanamiento_id'),
+                    cantidad_detalle_comanda = it.get('cantidad', 1)
+                )
+
+        return JsonResponse({'success': True, 'comanda_id': comanda.pk})
+
+    except Exception as e:
+        print('ERROR EN CREACIÓN DE COMANDA:', e)
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+# ENTREGAR COMANDA SOLO CUANDO LA ID DE ESTADO ES 2
+@csrf_exempt
+def entregar_comanda_garzon(request, id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+    try:
+        comanda = Comanda.objects.get(id_comanda=id)
+    except Comanda.DoesNotExist:
+        return JsonResponse({'error': 'Comanda no encontrada'}, status=404)
+
+    if comanda.estado_id != 2:
+        return JsonResponse(
+            {'error': 'Solo puedes marcar como entregada una comanda en estado "Esperando entrega".'},
+            status=400
+        )
+
+    comanda.estado_id = 3
+    comanda.hora_fin_comanda = timezone.now()
+    comanda.save()
+    return JsonResponse({'mensaje': 'Comanda entregada correctamente'})
+
+# HISTORIAL DE COMANDAS
+def historial(request):
+    fecha_filtrada = request.GET.get('fecha')
+    comandas = Comanda.objects.filter(estado_id=4).order_by('-fecha_comanda', '-hora_inicio_comanda')
+
+    if fecha_filtrada:
+        comandas = comandas.filter(fecha_comanda=parse_date(fecha_filtrada))
+
+    context = {
+        'comandas': comandas,
+        'fecha_filtrada': fecha_filtrada
+    }
+    return render(request, 'historial.html', context)
+
+# ------------ FIN VISTA DE GARZON ------------
+
+
+# ------------ API DE PRODUCTOS Y ACOMPAÑAMIENTOS ------------
+
+# OBTENER PRODUCTOS POR ID DE CATEGORIA EN LA BASE DE DATOS
 def obtener_productos_por_categoria(request, categoria_id):
     productos = Producto.objects.filter(categoria_id=categoria_id)
     data = [
@@ -128,102 +330,67 @@ def obtener_productos_por_categoria(request, categoria_id):
     ]
     return JsonResponse({'productos': data})
 
-from .models import Acompanamiento
-
-# ACOMPAÑAMIENTOS SI EL BOOLEAN ES TRUE
-
+# OBTENER ACOMPAÑAMIENTOS BASE DE DATOS
 def obtener_acompanamientos(request):
     acompanamientos = Acompanamiento.objects.all()
     data = [
-        {'id': a.id_acompanamiento, 'nombre': a.nombre_acompanamiento}
+        {
+            'id'    : a.id_acompanamiento,
+            'nombre': a.nombre_acompanamiento,
+            'precio': int(a.precio_acompanamiento),
+            'imagen': a.imagen_acompanamiento.url if a.imagen_acompanamiento else ''
+        }
         for a in acompanamientos
     ]
     return JsonResponse({'acompanamientos': data})
 
-# CREAR COMANDA (SE INGRESA A LA BASE DE DATOS)
+# ------------ FIN API DE PRODUCTOS Y ACOMPAÑAMIENTOS ------------
 
-@csrf_exempt
-def crear_comanda(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            # OBTENER DATOS DEL JSON
-            nombre_usuario = request.session.get('nombre_usuario')
-            mesa_id = data.get('mesa_id')
-            estado_id = data.get('estado_id')
-            detalle = data.get('detalle')
-            precio_total_comanda = data.get('precio_total_comanda')
-            fecha_str = data.get('fecha_comanda')
-            hora_inicio_str = data.get('hora_inicio_comanda')
-            # MOSTRAR HORA A LA QUE ESTA LLEGANDO
-            print("Hora recibida:", hora_inicio_str, type(hora_inicio_str))
-            # BUSCAR OBJETOS RELACIONADOS
-            usuario = Usuario.objects.get(nombre_usuario=nombre_usuario)
-            mesa = Mesa.objects.get(id_mesa=mesa_id)
-            estado = Estado.objects.get(id_estado=estado_id)
-            # CONVERTIR FECHA Y HORA
-            fecha = datetime.strptime(fecha_str, '%Y-%m-%d').date()
-            hora_inicio = datetime.strptime(f"{fecha_str} {hora_inicio_str}", '%Y-%m-%d %H:%M:%S')
-            # CREAR LA COMANDA
-            comanda = Comanda.objects.create(
-                usuario=usuario,
-                mesa=mesa,
-                estado=estado,
-                detalle=detalle,
-                precio_total_comanda=precio_total_comanda,
-                fecha_comanda=fecha,
-                hora_inicio_comanda=hora_inicio
-            )
-            
-            return JsonResponse({'success': True, 'comanda_id': comanda.id_comanda})
-        
-        except Exception as e:
-            print('ERROR EN CREACIÓN DE COMANDA:', e)
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def entregar_comanda_garzon(request, id):
-    if request.method == 'POST':
-        try:
-            comanda = Comanda.objects.get(id_comanda=id)
-            comanda.estado_id = 3
-            comanda.hora_fin_comanda = timezone.now()
-            comanda.save()
-            return JsonResponse({'mensaje': 'Comanda entregada correctamente'})
-        except Comanda.DoesNotExist:
-            return JsonResponse({'error': 'Comanda no encontrada'}, status=404)
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
-
-# GARZON_HISTORIAL
-
-def historial(request):
-    return render(request, 'historial.html')
-
-# VISTA COCINA
+# ------------ VISTA COCINA ------------
 
 def cocina(request):
-    comandas = Comanda.objects.filter(estado_id=1).select_related('mesa', 'usuario')
-    
+
+    comandas = (
+        Comanda.objects
+        .filter(estado_id=1)
+        .select_related('mesa', 'usuario')
+    )
+
     datos = []
     for comanda in comandas:
-        duracion = now() - comanda.hora_inicio_comanda
-        horas = duracion.seconds // 3600
-        minutos = (duracion.seconds % 3600) // 60
-        productos = comanda.detalle.split('\n') if comanda.detalle else []
+        delta    = now() - comanda.hora_inicio_comanda
+        horas    = delta.seconds // 3600
+        minutos  = (delta.seconds % 3600) // 60
+
+        productos = []
+        detalles = (
+            DetalleComanda.objects
+            .filter(comanda=comanda)
+            .select_related('producto', 'acompanamiento')
+        )
+
+        for det in detalles:
+            nombre_partes = []
+            if det.producto:
+                nombre_partes.append(det.producto.nombre_producto)
+            if det.acompanamiento:
+                nombre_partes.append(det.acompanamiento.nombre_acompanamiento)
+
+            productos.append(' - '.join(nombre_partes))
 
         datos.append({
-            'id': comanda.id_comanda,
-            'mesa': comanda.mesa.id_mesa,
-            'garzon': comanda.usuario.nombre_usuario,
-            'duracion': f"{horas}h {minutos}m",
+            'id'       : comanda.id_comanda,
+            'mesa'     : comanda.mesa.numero_mesa,
+            'garzon'   : comanda.usuario.nombre_usuario,
+            'duracion' : f"{horas}h {minutos}m",
             'productos': productos,
         })
 
     return render(request, 'cocina.html', {'comandas': datos})
 
-
-# ENTREGAR COMANDA COCINA
+# ENTREGAR COMANDA (CAMBIAR ID A 2)
 
 def entregar_comanda(request, id):
     comanda = Comanda.objects.get(id_comanda=id)
@@ -232,33 +399,21 @@ def entregar_comanda(request, id):
     comanda.save()
     return redirect('cocina')
 
+# ------------ FIN VISTA COCINA ------------
 
 
-def obtener_comanda_por_mesa(request, numero):
-    try:
-        mesa = Mesa.objects.get(numero_mesa=numero)
-        comanda = Comanda.objects.filter(mesa=mesa).exclude(estado_id=4).order_by('-id_comanda').first()
-        if comanda:
-            return JsonResponse({
-                'comanda_id': comanda.id_comanda,
-                'estado_id': comanda.estado_id,
-                'detalle': comanda.detalle,
-                'total': comanda.precio_total_comanda
-            })
-        return JsonResponse({'comanda_id': None})
-    except Mesa.DoesNotExist:
-        return JsonResponse({'error': 'Mesa no encontrada'}, status=404)
 
-# MESAS SOLO CON PEDIDOS DE ID DEL 1 AL 3
+# ------------ VISTA CAJA ------------
 
 def caja(request):
     mesas = Mesa.objects.all()
-    comandas_activas = Comanda.objects.exclude(estado_id=4)
+    comandas_activas = Comanda.objects.exclude(estado_id__in=[4, 5])
 
     mesas_con_estado = []
     for mesa in mesas:
         comanda = comandas_activas.filter(mesa=mesa).order_by('-id_comanda').first()
         if comanda:
+            # MESAS SOLO CON PEDIDOS DE ID DEL 1 AL 3
             if comanda.estado_id == 1:
                 estado_class = 'mesa-estado-preparacion'
             elif comanda.estado_id == 2:
@@ -284,7 +439,7 @@ def caja(request):
 
     return render(request, 'caja.html', {'mesas': mesas_con_estado})
 
-
+# CAMBIAR ESTADO A 4 QUE ES COMPLETADO
 @csrf_exempt
 def finalizar_comanda(request, id):
     if request.method == 'POST':
@@ -297,23 +452,21 @@ def finalizar_comanda(request, id):
             return JsonResponse({'ok': False, 'error': 'No encontrada'})
     return JsonResponse({'ok': False, 'error': 'Método no permitido'})
 
-# HISTORIAL DE COMANDAS POR FECHA
+# CAMBIAR ESTADO A 5 QUE ES CANCELADA
+@csrf_exempt
+def cancelar_comanda(request, id):
+    if request.method == 'POST':
+        try:
+            comanda = Comanda.objects.get(id_comanda=id)
+            comanda.estado_id = 5
+            comanda.hora_fin_comanda = timezone.now()
+            comanda.save()
+            return JsonResponse({'ok': True})
+        except Comanda.DoesNotExist:
+            return JsonResponse({'ok': False, 'error': 'Comanda no encontrada'})
+    return JsonResponse({'ok': False, 'error': 'Método no permitido'})
 
-def historial(request):
-    fecha_filtrada = request.GET.get('fecha')
-    comandas = Comanda.objects.filter(estado_id=4).order_by('-fecha_comanda', '-hora_inicio_comanda')
-
-    if fecha_filtrada:
-        comandas = comandas.filter(fecha_comanda=parse_date(fecha_filtrada))
-
-    context = {
-        'comandas': comandas,
-        'fecha_filtrada': fecha_filtrada
-    }
-    return render(request, 'historial.html', context)
-
-# HISTORIAL DE COMANDAS POR FECHA
-
+# HISTORIAL DE COMANDAS
 def historialcaja(request):
     fecha_filtrada = request.GET.get('fecha')
     comandas = Comanda.objects.filter(estado_id=4).order_by('-fecha_comanda', '-hora_inicio_comanda')
@@ -327,20 +480,111 @@ def historialcaja(request):
     }
     return render(request, 'historial_caja.html', context)
 
-def logout(request):
-    request.session.flush()
-    return redirect('/')
+# ------------ FIN VISTA CAJA ------------
 
-#ELIMINAR COMANDA CAJA
+
+
+# ------------ VISTA ADMINISTRADOR ------------
+
+# PRODUCTOS Y ESTADISTICAS DE ESTOS VENDIDOS
 
 @csrf_exempt
-def eliminar_comanda(request, id):
-    if request.method == 'POST':
-        try:
-            comanda = Comanda.objects.get(id_comanda=id)
-            comanda.delete()
-            return JsonResponse({'ok': True})
-        except Comanda.DoesNotExist:
-            return JsonResponse({'ok': False, 'error': 'Comanda no encontrada'})
-    return JsonResponse({'ok': False, 'error': 'Método no permitido'})
+def productos(request):
+    rango = int(request.GET.get("m", 3))
+    fecha_limite = now() - timedelta(days=30 * rango)
 
+    items = []
+
+    prod = (
+        DetalleComanda.objects
+        .filter(comanda__hora_inicio_comanda__gte=fecha_limite,
+                producto__isnull=False)
+        .values('producto_id')
+        .annotate(vendidos=Sum('cantidad_detalle_comanda'))
+    )
+
+    for row in prod:
+        p = Producto.objects.select_related('categoria').get(pk=row['producto_id'])
+        precio = int(p.precio_producto)
+        vendidos = row['vendidos']
+        items.append({
+            'nombre': p.nombre_producto,
+            'categoria': p.categoria.nombre_categoria if p.categoria else '-',
+            'precio': precio,
+            'imagen': p.imagen_producto.url if p.imagen_producto else '',
+            'vendidos': vendidos,
+            'total': precio * vendidos,
+        })
+
+    acomp = (
+        DetalleComanda.objects
+        .filter(comanda__hora_inicio_comanda__gte=fecha_limite,
+                acompanamiento__isnull=False)
+        .values('acompanamiento_id')
+        .annotate(vendidos=Sum('cantidad_detalle_comanda'))
+    )
+
+    for row in acomp:
+        a = Acompanamiento.objects.get(pk=row['acompanamiento_id'])
+        precio = int(a.precio_acompanamiento)
+        vendidos = row['vendidos']
+        items.append({
+            'nombre': a.nombre_acompanamiento,
+            'categoria': '-',
+            'precio': precio,
+            'imagen': a.imagen_acompanamiento.url if a.imagen_acompanamiento else '',
+            'vendidos': vendidos,
+            'total': precio * vendidos,
+        })
+
+    items = sorted(items, key=lambda x: x['vendidos'], reverse=True)[:5]
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('accept') == 'application/json':
+        return JsonResponse(items, safe=False)
+
+    return render(request, 'productos.html', {
+        'items': items,
+        'rango': rango,
+    })
+
+# ESTADISTICAS DE COMANDAS COMPLETADAS Y CANCELADAS
+@csrf_exempt
+def estadisticas(request):
+    rango = int(request.GET.get('m', 3))
+
+    hoy = date.today().replace(day=1)
+    fecha_inicio = hoy - timedelta(days=30 * (rango - 1))
+
+    qs = (
+        Comanda.objects
+        .filter(fecha_comanda__gte=fecha_inicio, estado_id__in=[4, 5])
+        .annotate(mes=TruncMonth('fecha_comanda'))
+        .values('mes', 'estado_id')
+        .annotate(total=Count('id_comanda'))
+        .order_by('mes')
+    )
+
+    meses_labels = []
+    datos_4 = []
+    datos_5 = []
+
+    mapa = {(r['mes'], r['estado_id']): r['total'] for r in qs}
+
+    for i in range(rango):
+        m = (fecha_inicio + timedelta(days=30 * i)).replace(day=1)
+        meses_labels.append(m.strftime('%b'))
+        datos_4.append(mapa.get((m, 4), 0))
+        datos_5.append(mapa.get((m, 5), 0))
+
+    context = {
+        'meses': meses_labels,
+        'serie4': datos_4,
+        'serie5': datos_5,
+        'total_4': sum(datos_4),
+        'total_5': sum(datos_5),
+        'rango': rango,
+    }
+
+    return render(request, 'estadisticas.html', context)
+
+# ------------ FIN VISTA ADMINISTRADOR ------------
