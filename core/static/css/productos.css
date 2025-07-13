@@ -25,6 +25,7 @@ main{
 .contenedor-arriba-izquierda h1{
   font-size: 20px;
   font-weight: bold;
+  cursor: default;
 }
 
 /* SELECT */
@@ -42,12 +43,14 @@ main{
   background-color: #f5f5f5;
   text-align: left;
   padding: 12px;
+  cursor: default;
 }
 
 .tabla-mas-vendidos td {
   padding: 15px 12px;
   vertical-align: middle;
   border-bottom: 1px solid #eee;
+  cursor: default;
 }
 
 .producto-info {
@@ -61,4 +64,35 @@ main{
   height: 45px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+#diseño-cursor {
+  cursor: default !important;
+}
+
+/* BOTON DE MESES */
+
+.bg-primary {
+  --bs-bg-opacity: 1;
+  background-color: #243346 !important;
+}
+
+.bg-danger {
+  --bs-bg-opacity: 1;
+  background-color: #bb2633 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+background-color: transparent !important;
+color: inherit !important;
+}
+
+.dropdown-item:hover {
+  background-color: #bb2633 !important;
+  color: white !important;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  background-color: #243346;
 }

@@ -530,7 +530,7 @@ def productos(request):
         vendidos = row['vendidos']
         items.append({
             'nombre': a.nombre_acompanamiento,
-            'categoria': '-',
+            'categoria': a.categoria.nombre_categoria if a.categoria else '-',
             'precio': precio,
             'imagen': a.imagen_acompanamiento.url if a.imagen_acompanamiento else '',
             'vendidos': vendidos,
