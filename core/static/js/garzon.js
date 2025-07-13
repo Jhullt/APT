@@ -539,7 +539,7 @@ document.querySelectorAll('.mesa').forEach(mesa => {
     const lblPedido   = document.getElementById('numero-pedido');
 
     contCarrito.innerHTML = '';
-    if (lblPedido) lblPedido.textContent = 'Nuevo Pedido';
+    if (lblPedido) lblPedido.textContent = 'COMANDA NUEVA';
     if (lblTotal)  lblTotal.textContent  = '$0';
 
     btnEntregar.style.display = 'none';
@@ -566,7 +566,7 @@ document.querySelectorAll('.mesa').forEach(mesa => {
           // NO SE PUEDE EDITAR EL PEDIDO
           pedidoEditable = false;
 
-          if (lblPedido) lblPedido.textContent = `N° Pedido: ${d.comanda_id}`;
+          if (lblPedido) lblPedido.textContent = `N° COMANDA: ${d.comanda_id}`;
 
           // CARGA LOS PRODUCTOS DE LA COMANDA GUARDADA EN LA INTERFAZ
           d.items.forEach(it => {
