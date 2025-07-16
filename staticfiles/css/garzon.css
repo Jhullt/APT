@@ -1,0 +1,961 @@
+.oculto {
+  display: none;
+}
+
+/* INICIO PERSONALIZACIÓN DEL MAIN */
+
+/* VISTA MESAS*/
+
+/* CONTENEDOR MESAS */
+
+.contenedor-mesas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  align-items: center;
+}
+
+/* MESAS */
+
+.mesa {
+  background-color: white;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  height: 140px;
+  width: 200px;
+}
+
+.mesa h1{
+  font-size: 16px;
+  color: white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+}
+
+.mesa p{
+  font-size: 16px;
+  font-weight: normal;
+  color: #403f3f;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.mesa h2{
+  font-size: 16px;
+  font-weight: normal;
+  color: #000000;
+}
+
+.mesa:hover {
+  transform: translateY(-3px);
+}
+
+/* MESA LIBRE */
+
+.mesa-estado-libre{
+  background-color: #898989;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA CON PEDIDO TOMADO  */
+
+.mesa-estado-preparacion{
+  background-color: #e58e26;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA CON PEDIDO LISTO PARA ENTREGAR DESDE COCINA  */
+
+.mesa-estado-entregar{
+  background-color: #e74c3c;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* MESA PEDIDO ENTREGADO */
+
+.mesa-estado-entregado{
+  background-color: #88c76f;
+  border-radius: 12px 12px 0px 0px;
+}
+
+/* REALIZAR COMANDA */
+
+.registrar-comanda-izquierda {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  min-width: 300px;
+}
+
+/* VOLVER */
+
+.registrar-comanda-izquierda-arriba{
+  display: flex;
+  flex-direction: row;
+  background-color: #bb2633;
+  padding: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: bolder;
+  align-items: center;
+  column-gap: 10px;
+  padding: 12px;
+}
+
+.registrar-comanda-izquierda-arriba button{
+  background-color: white;
+  color: #bb2633;
+  border: none;
+  border-radius: 100%;
+  height: 33px;
+  width: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registrar-comanda-izquierda-arriba button:hover{
+  background-color: #76121c;
+  color: white;
+  border: none;
+  border-radius: 100%;
+  height: 33px;
+  width: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registrar-comanda-izquierda-arriba h1{
+  font-size: 30px;
+  color: white;
+  margin: 0px;
+  cursor: default;
+}
+
+/* CATEGORIAS  */
+
+.registrar-comanda-izquierda-abajo{
+  background-color: #bb2633;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-categorias{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding: 5px;
+}
+
+.contenedor-categorias button{
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: 0.2s;
+}
+
+.contenedor-categorias button:hover{
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: #76121c;
+  transition: 0.2s;
+}
+
+/* PRODUCTOS */
+
+.contenedor-productos{
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  max-height: 510px;
+  overflow-y: auto;
+  padding-right: 5px;
+  padding-bottom: 20px;
+}
+
+/* PRODUCTOS TARJETA */
+
+.producto {
+  background: white;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.producto img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.producto p {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #222;
+}
+
+.producto strong {
+  display: block;
+  margin-top: 5px;
+  color: #e74c3c;
+}
+
+/* SEPARADOR */
+
+.registrar-comanda-centro{
+  width: 5px;
+  background-color: #bb2633;
+  cursor: col-resize;
+  position: relative;
+  z-index: 10;
+}
+
+#vista-carta {
+  display: none;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* CONTENEDOR DERECHA */
+
+.registrar-comanda-derecha {
+  width: 45%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+/* INFORMACIÓN ARRIBA  */
+
+.registrar-comanda-derecha-arriba{
+  background-color: #243346;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  column-gap: 40px;
+  justify-content: space-around;
+}
+
+/* NOMBRE GARZON  */
+
+.registrar-comanda-garzon{
+  display: flex;
+  align-items: center;
+}
+
+.registrar-comanda-garzon h1{
+  color: white;
+  font-size: 16px;
+  margin: 0px;
+}
+
+/* NUMERO DE MESA */
+
+.registrar-comanda-mesa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  position: relative;
+}
+
+.registrar-comanda-mesa h1{
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.registrar-comanda-mesa button{
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;  
+}
+
+/* INFORMACIÓN DE LA COMANDA */
+
+.registrar-comanda-derecha-medio{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+/* NUMERO DE PEDIDO */
+
+.registrar-comanda-derecha-medio-n-pedido{
+  background-color: #243346;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin: 12px 12px 12px 12px;
+}
+
+.registrar-comanda-derecha-medio-n-pedido h1{
+  font-size: 16px;
+  font-weight: bolder;
+  color: white;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* PEDIDOS EN CARRITO */
+
+.registrar-comanda-derecha-medio-pedido-contenedor {
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding-right: 5px;
+  margin: 12px 12px 12px 12px;
+}
+
+/* PRECIO TOTAL */
+
+.registrar-comanda-derecha-precio{
+  background-color: #243346;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.registrar-comanda-derecha-precio h1{
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+/* BOTONES */
+
+#enviar-comanda{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#enviar-comanda:hover {
+  background-color: #76121c;
+}
+
+.registrar-comanda-derecha-buttons{
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  column-gap: 3px;
+}
+
+#entregar-comanda{
+  background-color: #53c342;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#entregar-comanda:hover {
+  background-color: #37b524;
+}
+
+#entregar-comanda:disabled,
+#entregar-comanda.btn-desactivado{
+  background:#b7b7b7 !important;
+  cursor:not-allowed;
+  color:#fff;
+}
+
+.btn-disabled{
+  background:#adb5bd!important;
+  cursor:not-allowed!important;
+  pointer-events:none;
+  opacity:.85;
+}
+
+#esperando-caja{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: default;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+/* AGREGAR CARRITO */
+
+.registrar-comanda-carrito{
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  justify-content: space-between
+}
+
+.registrar-comanda-carrito-izquierda{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.registrar-comanda-carrito-izquierda h1{
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0px;
+}
+
+.registrar-comanda-carrito-izquierda p{
+  font-size: 16px;
+  font-weight: bold;
+  color: #ea4646;
+  margin: 0px;
+}
+
+.registrar-comanda-carrito-derecha button{
+  background-color: white;
+  color: #243346;
+  border: none;
+}
+
+.registrar-comanda-carrito-derecha button:hover{
+  background-color: white;
+  color: #9cb2c7;
+  border: none;
+}
+
+/* MODAL */
+
+.modal-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-header h5{
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+#cancelarAcompanamiento{
+  background-color: #bb2633;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#cancelarAcompanamiento:hover{
+  background-color: #76121c;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+#confirmarAcompanamiento{
+  background-color: #243346;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+}
+
+#confirmarAcompanamiento:hover{
+  background-color: #9cb2c7;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: 160px;
+  height: 40px;
+  border: none;
+}
+
+.form-check-input:checked {
+  background-color: #243346;
+  border-color: #243346;
+}
+
+/* MEJORA VISUAL DE LAS NOTIFICACIONES */
+
+/* ALERTA COMANDA ENVIADA */
+
+.overlay-comanda{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda.oculto{display:none;}
+
+.overlay-comanda img{width:120px;}
+
+.overlay-comanda h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+/* PUNTITOS ANIMADOS */
+
+.dot{
+  display:inline-block;
+  line-height:0;
+  animation:dotBounce 1s infinite ease-in-out;
+}
+.dot1{animation-delay:0s;}
+.dot2{animation-delay:.15s;}
+.dot3{animation-delay:.30s;}
+
+@keyframes dotBounce{
+  0%,80%,100%{transform:translateY(0);opacity:1;}
+  40%       {transform:translateY(-4px);opacity:.6;}
+}
+
+/* ALERTA CARRITO VACIO */
+
+.overlay-comanda-1{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-1{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-1.oculto{display:none;}
+
+.overlay-comanda-1 img{width:120px;}
+
+.overlay-comanda-1 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-1{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-1:hover{
+background-color: #76121c;
+}
+
+/* SELECCIONAR ACOMPAÑAMIENTO */
+
+#confirmarAcompanamiento:disabled {
+  cursor: not-allowed !important;
+  opacity: .6;
+}
+
+/* COMANDA ENTREGADA */
+
+.overlay-comanda-2{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-2{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-2.oculto{display:none;}
+
+.overlay-comanda-2 img{width:120px;}
+
+.overlay-comanda-2 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+/* ERROR AL ENTREGAR COMANDA */
+
+.overlay-comanda-3{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-3{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-3.oculto{display:none;}
+
+.overlay-comanda-3 img{width:120px;}
+
+.overlay-comanda-3 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-3{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-3:hover{
+background-color: #76121c;
+}
+
+/* ERROR DE CONEXIÓN AL ENTREGAR LA COMANDA  */
+
+.overlay-comanda-4{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-4{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-4.oculto{display:none;}
+
+.overlay-comanda-4 img{width:120px;}
+
+.overlay-comanda-4 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-4{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-4:hover{
+background-color: #76121c;
+}
+
+/* CUALQUIER OTRO ERROR */
+
+.overlay-comanda-5{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-5{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-5.oculto{display:none;}
+
+.overlay-comanda-5 img{width:120px;}
+
+.overlay-comanda-5 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-5{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-5:hover{
+background-color: #76121c;
+}
+
+/* ERROR EN EL PROCESO */
+
+.overlay-comanda-6{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-6{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-6.oculto{display:none;}
+
+.overlay-comanda-6 img{width:120px;}
+
+.overlay-comanda-6 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-6{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-6:hover{
+background-color: #76121c;
+}
+
+/* ERROR DE CONEXIÓN  */
+
+.overlay-comanda-7{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.overlay-box-7{
+  background:#fff;
+  padding:2rem 2.5rem;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.overlay-comanda-7.oculto{display:none;}
+
+.overlay-comanda-7 img{width:120px;}
+
+.overlay-comanda-7 h2{
+  font-size:20px;
+  font-weight:700;
+  color:#000;
+  margin:0;
+  display:flex;
+  align-items: center;
+  gap:2px;
+}
+
+#cerrar-overlay-7{
+  background-color: #bb2633;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+#cerrar-overlay-7:hover{
+background-color: #76121c;
+}
+
+/* DISEÑO TABLET */
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .contenedor-productos {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    max-height: 570px;
+    overflow-y: auto;
+    padding-right: 5px;
+    padding-bottom: 20px;
+  }
+}

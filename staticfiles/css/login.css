@@ -1,0 +1,137 @@
+body {
+    background: linear-gradient(to right, #243346, #243346, #425164);
+    font-family: 'Poppins', sans-serif !important;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+section {
+    width: 350px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+section img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.contenedor-login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.contenedor-login h1 {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    cursor: default;
+}
+
+.contenedor-login input {
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    outline: none;
+    transition: border-color 0.3s;
+    font-size: 14px;
+}
+
+.contenedor-login input:focus{
+  border-color:#bb2633;
+  box-shadow:0 0 0 2px rgba(187,38,51,.25);
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+
+.input-icon-wrapper{
+  position: relative;
+  width: 100%;
+}
+
+/* ➊  padding extra a la derecha para dejar espacio al icono
+   ➋  igualamos line-height a la altura del input para que
+       el texto y el icono queden perfectamente centrados */
+.input-icon-wrapper input{
+  height: 35px;
+  line-height: 35px;
+  padding-right: 48px;     /* ← 48 px hace hueco al ojo */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .3s;
+}
+
+.password-eye{
+  background: #fff url("data:image/svg+xml,%3Csvg ... ojo en svg ...%3C/svg%3E") no-repeat
+              right 12px center / 18px 18px;
+  padding-right: 48px;        /* deja hueco al icono */
+  border:1px solid #ccc;
+  border-radius:5px;
+  height:35px;
+  line-height:35px;
+}
+.password-eye.show{
+  background-image:url("data:image/svg+xml,%3Csvg ... ojo-cerrado ...%3C/svg%3E");
+}
+
+
+[hidden] { display:none; }
+#error { animation: aparecer .4s ease-in-out; }
+
+#error {
+    font-size: 14px;
+    color: #bb2633;
+    animation: aparecer 0.4s ease-in-out;
+}
+
+@keyframes aparecer {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+button.ingresar-btn {
+    background-color: #bb2633;
+    color: white;
+    border: none;
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+button.ingresar-btn:hover {
+    background-color: #76121c;
+    border: none;
+    font-weight: bold;
+}
+

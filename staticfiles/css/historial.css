@@ -1,0 +1,132 @@
+/* FECHA */
+
+.contenedor-filtrar{
+    display: flex;
+    padding: 30px;
+    justify-content: space-between;
+}
+
+.contenedor-filtrar button{
+    background-color: #243346;
+    width: 130px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.contenedor-filtrar button:hover{
+    background-color: #9cb2c7;
+    width: 130px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.fecha-historial{
+    display: flex;
+    justify-content: flex-start;
+}
+
+input[type="date"] {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 16px;
+}
+
+/* CONTENEDOR TARJETA CON COMANDA */
+
+.contenedor-tarjetas-historial{
+    display: flex;
+    padding: 30px;
+    row-gap: 15px;
+    flex-direction: column;
+}
+
+.tarjeta-historial{
+    background-color: white;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    display: flex;
+    justify-content: space-between
+}
+
+.tarjeta-historial-izquierda{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tarjeta-historial-izquierda h4{
+    font-size: 16px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tarjeta-historial-izquierda h5{
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.n-pedido-hora{
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.n-pedido-hora h1{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin: 0px;
+    cursor: default;
+}
+
+.n-pedido-hora h2{
+    font-size: 16px;
+    color: #494949;
+    margin: 0px;
+    cursor: default;
+}
+
+.n-pedido-hora h3{
+    font-size: 16px;
+    color: #494949;
+    margin: 0px;
+    cursor: default;
+}
+
+.tarjeta-historial-derecha{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tarjeta-historial-derecha button{
+    background-color: #243346;
+    color: white;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+
+.tarjeta-historial-derecha button:hover{
+    background-color: #9cb2c7;
+    color: white;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
