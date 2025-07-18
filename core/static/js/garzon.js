@@ -647,27 +647,30 @@ document.querySelector('.registrar-comanda-izquierda-arriba button')
 
 // ------------ FUNCIONALIDAD CREAR COMANDA ------------
 
-// --- ENVIAR COMANDA
+// BOTÓN ENVIAR COMANDA
 document.getElementById('enviar-comanda').addEventListener('click', async () => {
 
+  // VERIFICAR QUE EL CARRITO NO ESTÉ VACÍO
   if (carritoData.length === 0) {
     overlayMostrar('vacio');
     return;
   }
   overlayMostrar('enviando');
 
-  /* 2. Total y estructura de ítems */
+  // ARMAR LISTA DE PRODUCTOS PARA ENVIAR
   const items = carritoData.map(r => ({
     product_id        : r.product_id,
     acompanamiento_id : r.acompanamiento_id,
-    cantidad          : r.cantidad               // hoy siempre 1
+    // SIEMPRE ES 1 POR AHORA
+    cantidad          : r.cantidad
   }));
 
+  // CALCULAR TOTAL DE LA COMANDA
   const total = carritoData.reduce(
     (acc, r) => acc + r.precio_unitario * r.cantidad, 0
   );
 
-  /* 3. Datos generales de la comanda */
+  // OBTENER DATOS GENERALES DE LA COMANDA
   const mesaId = parseInt(document.getElementById('select-mesa')?.value) ||
                  parseInt(document.getElementById('mesa-actual')?.dataset.mesa);
 
@@ -676,16 +679,18 @@ document.getElementById('enviar-comanda').addEventListener('click', async () => 
   const data = {
     usuario             : document.getElementById('usuario-logueado')?.value || 'Garzón',
     mesa_id             : mesaId,
+    // ESTADO: EN PREPARACIÓN
     estado_id           : 1,
     precio_total_comanda: total,
     items               : items
   };
 
-  /* 4. POST al backend */
+  // ENVIAR LA COMANDA AL BACKEND (POST)
   try {
     const res  = await fetch('/api/comanda/crear/', {
       method  : 'POST',
       headers : { 'Content-Type':'application/json',
+                  // SELLO DE SEGURIDAD CSRF
                   'X-CSRFToken'  : getCSRFToken()
                 },
       body    : JSON.stringify(data)
@@ -694,10 +699,12 @@ document.getElementById('enviar-comanda').addEventListener('click', async () => 
     const json = await res.json().catch(() => ({}));
     console.log('status', res.status, 'json', json);
 
+    // MOSTRAR CONFIRMACIÓN
     if (res.ok && json.success !== false) {
       overlayMostrar('enviado');
       setTimeout(() => location.reload(), 1800);
     } else {
+      // ERROR AL ENTREGAR
       overlayMostrar('errorEntregar');
     }
 
