@@ -23,8 +23,6 @@ function getCSRFToken() {
 
 // ------------ OVERLAY DE ALERTAS ------------
 
-
-
 const CAPAS = {
   // PROCESO VISUAL DE ENVIANDO COMANDA
   enviando: { id:'overlay-comanda',
@@ -94,8 +92,6 @@ function overlayMostrar (escena, mensajeExtra = null) {
 
 
 // ------------ REDIMENSIONADOR DE PANEL ------------
-
-
 
 // ELEMENTOS DE PANEL
 const divisorCentro = document.querySelector('.registrar-comanda-centro');
@@ -290,8 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // -- FORMATO DE MONEDA CHILENA --
 const fmt = v => '$' + Number(v || 0).toLocaleString('es-CL');
 
-
-
 // -- VARIABLES DE ESTADO INTERNO --
 
 // ÍTEMS EN EL CARRITO
@@ -301,13 +295,9 @@ let totalCLP        = 0;
 // PERMITE O NO MODIFICAR
 let pedidoEditable  = true;
 
-
-
 // -- REFERENCIAS A LA INTERFAZ DEL CARRITO --
 const contCarrito = document.querySelector('.registrar-comanda-derecha-medio-pedido-contenedor');
 const lblTotal    = document.getElementById('total-precio-comanda');
-
-
 
 
 // ---- CONFIRMACIÓN DE ACOMPAÑAMIENTO DESDE EL MODAL ----
@@ -439,8 +429,6 @@ function actualizarCarrito() {
 }
 
 // ---- FIN ACTUALIZAR LA INTERFAZ ----
-
-
 
 // ------------ FIN FUNCIONALIDAD DEL CARRITO ------------
 

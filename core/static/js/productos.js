@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // BOTÓN QUE MUESTRA EL RANGO ACTUAL
   const btnDrop = document.querySelector('#btn-rango');
 
-  // TODAS LAS OPCIONES DEL DROPDOWN (3, 6, 12 meses, etc.)
+  // TODAS LAS OPCIONES DEL MENÚ DESPLEGABLE (3, 6, 12 MESES, ETC.)
   const linksDropdown = document.querySelectorAll('.dropdown-menu a');
 
-  // REFERENCIA A LA <tbody> DE LA TABLA
+  // CUERPO DE LA TABLA DONDE SE MOSTRARÁN LOS PRODUCTOS
   const rowsBody = document.querySelector('#tbody-productos');
 
   // AL HACER CLIC EN UNA OPCIÓN DEL MENÚ
@@ -25,10 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr><td colspan="5" class="text-center py-3">CARGANDO…</td></tr>`;
         }
 
-        // REDIRECCIÓN A LA MISMA PÁGINA CON PARÁMETRO ?m=
+        // RECARGA LA PÁGINA CON EL RANGO SELECCIONADO
         setTimeout(() => {
           window.location.href = `?m=${rango}`;
-        }, 300); // Pequeño delay para que el usuario vea el mensaje
+        // PEQUEÑO DELAY PARA QUE EL USUARIO VEA EL MENSAJE
+        }, 300);
       }
     });
   });

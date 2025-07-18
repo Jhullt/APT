@@ -1,62 +1,28 @@
-# LIBRERÍAS DE PYTHON ESTÁNDAR
-# PERMITE LEER Y ESCRIBIR ARCHIVOS JSON
+# LIBRERÍAS DE PYTHON
 import json
-# MANEJA TEXTOS Y CARACTERES
-import string
-# GENERA VALORES ALEATORIOS COMO CÓDIGOS
-import random
-# PERMITE USAR EXPRESIONES REGULARES
-import re
-# MANEJA FECHAS Y HORAS
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 
-# LIBRERÍAS EXTERNAS
-# PERMITE HACER SOLICITUDES HTTP
-import requests
+# FUNCIONES PARA MOSTRAR VISTAS Y REDIRECCIONES
+from django.shortcuts import render, redirect
 
-# PERMITE SUMAR O RESTAR MESES, AÑOS, ETC.
-from dateutil.relativedelta import relativedelta
-
-# FUNCIONES DE VISTA EN DJANGO
-# RENDERIZA PÁGINAS HTML, REDIRECCIONA Y OBTIENE OBJETOS DE LA BASE DE DATOS
-from django.shortcuts import render, redirect, get_object_or_404
-
-# RETORNA RESPUESTAS EN FORMATO JSON
-from django.http import JsonResponse
-
-# DESACTIVA LA PROTECCIÓN CSRF EN ALGUNAS VISTAS
-from django.views.decorators.csrf import csrf_exempt
-
-# MUESTRA MENSAJES AL USUARIO EN LA PÁGINA
-from django.contrib import messages
-
-# UTILIDADES DE FECHA EN DJANGO
-# PERMITE USAR ZONAS HORARIAS CORRECTAS
+# FUNCIONES PARA MANEJAR FECHAS Y TIEMPOS
 from django.utils import timezone
-
-# OBTIENE LA HORA ACTUAL CON ZONA HORARIA
 from django.utils.timezone import now
-
-# CONVIERTE TEXTO EN FORMATO FECHA
 from django.utils.dateparse import parse_date
 
-# CONSULTAS Y AGRUPACIONES EN DJANGO
-# PERMITE FILTRAR USANDO CONDICIONES COMO OR, AND, ETC.
-from django.db.models import Q, Count, Sum
+# JSON, CSRF Y MENSAJES
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
-# AGRUPA RESULTADOS POR MES
+# CONSULTAS A BASE DE DATOS Y TRANSACCIONES
+from django.db import transaction
+from django.db.models import Q, Count, Sum
 from django.db.models.functions import TruncMonth
 
-# MANEJA TRANSACCIONES PARA MODIFICAR VARIAS TABLAS A LA VEZ
-from django.db import transaction
-
-# CONVIERTE OBJETOS A FORMATO JSON U OTROS
-from django.core import serializers
-
-# CONFIGURACIÓN GLOBAL DEL PROYECTO
+# CONFIGURACIÓN DEL PROYECTO
 from django.conf import settings
 
-# MODELOS DEL SISTEMA
+# MODELOS DEL PROYECTO
 from .models import Producto, Categoria, Comanda, Usuario, Mesa, Estado, Acompanamiento, DetalleComanda
 
 # ------------ LOGIN Y CIERRE DE SESIÓN ------------

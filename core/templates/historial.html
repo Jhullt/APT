@@ -77,7 +77,7 @@
                     <div class="n-pedido-hora">
                         <h1>Pedido {{ comanda.id_comanda }}</h1>
                         <h2>{{ comanda.fecha_comanda|date:"d/m/Y" }}</h2>
-                        <h3>{{ comanda.hora_inicio_comanda|time:"H:i" }}</h3>                        
+                        <h3>{{ comanda.hora_inicio_comanda|time:"H:i" }}{% if comanda.hora_fin_comanda %} - {{ comanda.hora_fin_comanda|time:"H:i" }}{% endif %}</h3>                        
                     </div>
                     <h4>Mesa {{ comanda.mesa.numero_mesa|stringformat:"02d" }}</h4>
                     {% for det in comanda.detallecomanda_set.all %}

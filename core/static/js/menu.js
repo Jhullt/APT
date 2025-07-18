@@ -2,18 +2,18 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // BOTÓN QUE ABRE O CIERRA EL MENÚ LATERAL
+  // BOTÓN QUE ABRE EL MENÚ LATERAL
   const btnSidebar = document.getElementById('btn-sidebar-toggle');
 
   // MENÚ LATERAL (SIDEBAR)
   const sidebar = document.getElementById('sidebar');
 
-  // CUANDO SE HACE CLIC EN EL BOTÓN → MUESTRA U OCULTA EL MENÚ
+  // CUANDO SE HACE CLIC EN EL BOTÓN MUESTRA EL MENÚ
   btnSidebar.addEventListener('click', () => {
     sidebar.classList.toggle('mostrar');
   });
 
-  // SI SE HACE CLIC FUERA DEL MENÚ Y ESTÁ ABIERTO → SE CIERRA
+  // SI SE HACE CLIC FUERA DEL MENÚ Y ESTÁ ABIERTO ESTE SE CIERRA
   document.addEventListener('click', (e) => {
     const clickedInside = sidebar.contains(e.target) || btnSidebar.contains(e.target);
     if (!clickedInside && sidebar.classList.contains('mostrar')) {
